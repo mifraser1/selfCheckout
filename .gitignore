@@ -1,0 +1,25 @@
+# Build directories
+build/
+Build/
+cmake_build/
+*.cmake
+
+# IDE files
+.vscode/
+.idea/
+*.cbp
+*.layout
+*.depend
+
+# Compiled objects
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.exe
+*.out
+
+# OS specific
+.DS_Store
+Thumbs.db
