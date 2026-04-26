@@ -38,25 +38,21 @@ cmake --build build
 - Add new source files in `src/`
 - Add headers in `include/`
 - Update `CMakeLists.txt` if adding new source files
-- Hardcoded product list in main.cpp for testing
-	- CSV loading infrastructure next
-- Invalid actions in wrong states silently fail
-	- Instead throw exceptions and return error codes
-- Columns of the ledger CSV should have `entryID` `transactionID` `subtotal` `tax` `total` `timestamp`
-- Override Class: Should track who (manager ID), when, what was overridden, and reason?
-- Implement methods in transaction and transactionItem
-- Flesh out productRecord
-- Build skeleton of systemState as FSM
-
 
 ## Features (To be implemented)
-- [ ] Room for Pricing Strategy to grow in transactionItems
+- [ ] Pricing Strategy to grow in transactionItems
 - [ ] Fix naming convention for typical C++ program; transactionItem -> TransactionItem
 - [ ] Weight validation based on expected weight of items
 - [ ] Age validation for certain items
 - [ ] Implement State System logic
+	- Invalid actions in wrong states silently fail
+		- Instead throw exceptions and return error codes
 - [ ] Implement Scale interface, for Amount
 - [ ] Look into APIs for inventory, accounting, payment
+- [ ] CSV loading infrastructure next
+	- Columns of the ledger CSV should have `entryID` `transactionID` `subtotal` `tax` `total` `timestamp`
+- [ ] Override Class: Should track who (manager ID), when, what was overridden, and reason?
+
 
 
 # Self-Checkout
@@ -101,11 +97,12 @@ Self-Checkout functional requirements are touch screen UI, bar code scanner, rec
 Transaction manager: maintain item list, calc totals, manage state, handle rollback, commit transaction
 
 ## Data Model
+To be updated
 
 | Class            | Attributes                                                                                 | Methods                                                                                                                          |
 | ---------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
 | Transaction      | `transactionID` `customerID` <br>`timestamp`<br>`paymentStatus`                            | `addItem()` `removeItem()` `calculateTotal()` `cancel()` `commit()`                                                              |
-| TransactionItem  | `itemID`<br>`name`<br>`price`<br>`weight (nullable)`<br>`qty` `taxRate`                    | `calcPrice(itemID, price, weight, taxRate)`                                                                                      |
+| TransactionItem  | `taxRate`                    | `calcPrice(itemID, price, weight, taxRate)`                                                                                      |
 | Inventory Record | `sku`<br>`onHand`<br>`reserved`<br>`lastUpdated`<br>                                       | `reserve(itemID, qty)` `release(transactionID)` `commit(transactionID)`                                                          |
 | Payment          | `paymentID` `transactionID` `amount` `status` `method`                                     | `processPayment()`                                                                                                               |
 | Ledger           | `entryID` `transactionID` `subtotal` `tax` `total` `timestamp`                             | `ledgerEntry(customerID, transactionID, total, tax, timestamp)`                                                                  |
