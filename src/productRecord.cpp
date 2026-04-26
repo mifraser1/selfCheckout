@@ -2,8 +2,8 @@
 
 struct productRecord
 {
-    int ID;
-    std::string name;
-    float price;
-    float taxRate;
+    // int ID;
+    // std::string name;
+    // float price;
+    // float taxRate;
 };

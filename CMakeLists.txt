@@ -4,10 +4,15 @@ project(selfCheckout)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Add source files
+# Add source files - list only files being actively compiled
+# Add new .cpp files here as you implement them
 set(SOURCES
     src/main.cpp
+    src/transaction.cpp
+    src/transactionItem.cpp
 )
+# In future, automatically find all .cpp files in src/
+# file(GLOB SOURCES "src/*.cpp")
 
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)

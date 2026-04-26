@@ -1,66 +1,95 @@
 #include "transaction.h"
 #include "transactionItem.h"
+#include "ledger.h"
+#include "productRecord.h"
+#include <string>
+#include <stdexcept>
 #include <vector>
 #include <memory>
-void addItem(const productRecord& product, double amount)
+#include <ctime>
+
+Transaction::Transaction(int transactionID, int customerID)
+    : transactionID(transactionID), customerID(customerID), 
+      timestamp(static_cast<int>(std::time(nullptr))), paymentStatus(false) {}
+
+void Transaction::addItem(const ProductRecord &product, double amount)
 {
-    transactionItem newItem(product.ID, amount, 0); // Assuming weight is 0 for non-weighted items
-    // Add item to the transaction
-    items.push_back(std::make_unique<transactionItem>(newItem.getID(), amount));
-}
-{
-    // Implementation for processing transaction
-}
-void removeItem()
-{
-    // Remove item from the transaction
-}
-void calculateTotal()
-{
-    // Calculate total amount for the transaction
-    total = item.calcPrice(...);
+    // Add new item to the transaction
+    items.emplace_back(std::make_unique<TransactionItem>(product, amount));
 }
 
-double getSubtotal() const
+void Transaction::removeItem(size_t index)
 {
-    // Return the subtotal for the transaction
+    // Remove item from the transaction
+    if (index >= items.size())
+    {
+        throw std::out_of_range("Invalid item index");
+    }
+    items.erase(items.begin() + index);
+}
+
+void Transaction::calculateTotal()
+{
+    // Calculate total is done on demand via getTotal()
+}
+
+double Transaction::getSubtotal() const
+{
+    // Return the subtotal for the transaction (sum of item prices)
     double subtotal = 0.0;
-    for(const auto& item : items) {
-        subtotal += item.calcPrice();
+    for (const auto &item : items)
+    {
+        subtotal += item->calcPrice();
     }
     return subtotal;
 }
-double getTaxTotal() const
+
+double Transaction::getTaxTotal() const
 {
     // Return the total tax for the transaction
     double taxTotal = 0.0;
-    for(const auto& item : items) {
-        taxTotal += item.taxCalc();
+    for (const auto &item : items)
+    {
+        taxTotal += item->taxCalc();
     }
+        // Can change rounding here, but for now just return the total tax
     return taxTotal;
 }
-double getTotal() const
+
+double Transaction::getTotal() const
 {
     // Return the total amount for the transaction
     return getSubtotal() + getTaxTotal();
 }
 
-void cancel()
+Ledger Transaction::createLedgerEntry(int entryID) const
 {
-    // Cancel the transaction
-    // clears items, releases inventory, and resets transaction state
+    // Create a ledger entry for the transaction
+    Ledger entry;
+    entry.entryID = entryID;
+    entry.transactionID = this->transactionID;
+    entry.subtotal = getSubtotal();
+    entry.tax = getTaxTotal();
+    entry.total = getTotal();
+    entry.timestamp = std::to_string(std::time(nullptr));
+
+    return entry;
 }
-void commit()
+
+void Transaction::cancel()
+{
+    // Cancel the transaction: clear items and reset payment status
+    items.clear();
+    paymentStatus = false;
+}
+
+Ledger Transaction::commit(int entryID)
 {
     // Commit the transaction
-    // finalizes the transaction (inv + accounting)
+    Ledger entry = createLedgerEntry(entryID);
+    
+    items.clear();          // transaction is complete, clear items
+    paymentStatus = true;   // mark as paid
+    
+    return entry;
 }
-
-// how transactionstores its items
-// vector that has owernship of multiple transactionItems, each with a reference to an item in inventory
-std::vector<std::unique_ptr<transactionItem>> items;
-
-int transactionID;
-int customerID;
-int timeStamp;
-bool paymentStatus;

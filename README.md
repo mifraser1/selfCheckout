@@ -38,16 +38,25 @@ cmake --build build
 - Add new source files in `src/`
 - Add headers in `include/`
 - Update `CMakeLists.txt` if adding new source files
+- Hardcoded product list in main.cpp for testing
+	- CSV loading infrastructure next
+- Invalid actions in wrong states silently fail
+	- Instead throw exceptions and return error codes
+- Columns of the ledger CSV should have `entryID` `transactionID` `subtotal` `tax` `total` `timestamp`
+- Override Class: Should track who (manager ID), when, what was overridden, and reason?
+- Implement methods in transaction and transactionItem
+- Flesh out productRecord
+- Build skeleton of systemState as FSM
+
 
 ## Features (To be implemented)
-- [ ] Transaction
-- [ ] Transaction ID
-- [ ] Inventory Record
-- [ ] Payment
-- [ ] Ledger
-- [ ] System State
-- [ ] Override
-- [ ] Scale
+- [ ] Room for Pricing Strategy to grow in transactionItems
+- [ ] Fix naming convention for typical C++ program; transactionItem -> TransactionItem
+- [ ] Weight validation based on expected weight of items
+- [ ] Age validation for certain items
+- [ ] Implement State System logic
+- [ ] Implement Scale interface, for Amount
+- [ ] Look into APIs for inventory, accounting, payment
 
 
 # Self-Checkout
@@ -60,14 +69,34 @@ Self-Checkout System is a transactional retail system for customers to scan, wei
 Self-Checkout functional requirements are touch screen UI, bar code scanner, receipt printer, and scale that are integrated with a store inventory system, accounting and payment processing, and employee oversight. The inventory system and accounting are external software for systems of record. The conditions for success are a smooth flow of a customer experience considering voided transactions and anti-theft, the individual items are scanned and the transaction accounted for.
 ## Architecture Overview
 ```
-[UI Controller]
-      |
-[Transaction Manager]
-      |
----------------------------------
-| Inventory API | Accounting API |
-| Payment API   | Scale Interface|
----------------------------------
+┌─────────────────────────────────────────────────────────────┐
+│                  MAIN / User Interface                      │
+│            (Orchestrates the scanning workflow)             │
+└─────────────────────────────────────────────────────────────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+        ▼                     ▼                     ▼
+   ┌─────────────┐   ┌──────────────────┐   ┌────────────┐
+   │   System    │   │  Transaction     │   │  Payment   │
+   │   State     │   │  Management      │   │ Processing │
+   │ (FSM)       │   │  (cart)          │   │            │
+   └─────────────┘   └──────────────────┘   └────────────┘
+        │                     │                     │
+        │          ┌──────────┴──────────┐          │
+        │          ▼                     ▼          │
+        │      ┌─────────────┐    ┌────────────┐   │
+        │      │Transaction  │    │ Product    │   │
+        │      │Item         │    │ Record     │   │
+        │      └─────────────┘    └────────────┘   │
+        │                                           │
+        └───────────────────────┬───────────────────┘
+                                ▼
+                    ┌───────────────────────┐
+                    │   Ledger & Logging    │
+                    │   CSV Storage         │
+                    │   Override Records    │
+                    └───────────────────────┘
 ```
 Transaction manager: maintain item list, calc totals, manage state, handle rollback, commit transaction
 

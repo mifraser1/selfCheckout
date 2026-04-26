@@ -1,22 +1,23 @@
-#ifndef transactionItem_H
-#define transactionItem_H
+#ifndef TRANSACTION_ITEM_H
+#define TRANSACTION_ITEM_H
 #include <string>
+#include "productRecord.h"
 
-class transactionItem
+class TransactionItem
 {
-
 public:
-    transactionItem(const productRecord &product, double amount) : product(product), amount(amount) {}
-    double calcPrice() const
-    {
-    }
-    double taxCalc() const
-    {
-    }
+    TransactionItem(const ProductRecord &product, double amount);
+
+    // Price calculations
+    double calcPrice() const;
+    double taxCalc() const;
+    
+    // Accessors
+    const ProductRecord &getProduct() const { return product; }
+    double getAmount() const { return amount; }
 
 private:
-    const productRecord &product;
-
-    double amount;
+    const ProductRecord &product;
+    double amount;  // quantity for packaged items, weight for produce
 };
-#endif // transactionItem_H
+#endif // TRANSACTION_ITEM_H

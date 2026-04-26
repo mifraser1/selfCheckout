@@ -1,21 +1,15 @@
 #include "transactionItem.h"
-#include <string>
-// customer picked 1.3 lbs of bananas
+#include "productRecord.h"
 
-// has access to all data for calculating price + tax
-class transactionItem
+TransactionItem::TransactionItem(const ProductRecord &product, double amount)
+    : product(product), amount(amount) {}
+
+double TransactionItem::calcPrice() const
 {
-    transactionItem(const productRecord &product, double amount) : product(product), amount(amount) {}
-    double calcPrice() const
-    {
-        return product.price * amount;
-    }
-    double taxCalc() const
-    {
-        return calcPrice() * product.taxRate;
-    }
+    return product.price * amount;
+}
 
-    const productRecord &product;
-
-    double amount;
-};
+double TransactionItem::taxCalc() const
+{
+    return calcPrice() * product.taxRate;
+}

@@ -1,4 +1,6 @@
 class scale {
+    // Skeleton for scale class, will be used to read weights
+
 public:
     scale() {
         // Constructor implementation

@@ -1,41 +1,56 @@
 #include <iostream>
 #include "transaction.h"
 #include "transactionItem.h"
-#include "systemState.h"
+// #include "systemState.h"
 #include "ledger.h"
-#include "override.h"
-#include "scale.h"
-#include "inventoryRecord.h"
-#include "payment.h"
+// #include "override.h"
+// #include "scale.h"
+// #include "inventoryRecord.h"
+// #include "payment.h"
+#include "productRecord.h"
+#include <iomanip> 
 
-int main() {
-    std::cout << "Self-Checkout System" << std::endl;
-    std::cout << "Welcome!" << std::endl;
+using namespace std;
 
-    transaction transaction1;
-    // transaction creates its own transactionItems
-    transaction1.addItem(itemID);
-    
-    transactionItem transactionItem1(12345);
-    std::cout << "Transaction ID: " << transactionItem1.getID() << std::endl;
-    
-    inventoryRecord inventoryRecord1;
-    inventoryRecord1.updateInventory();
+int main()
+{
+    cout << "Self-Checkout System Simulation\n" << endl;
 
-    payment payment1;
-    payment1.processPayment();
+    int transactionID = 1;
+    Transaction transaction1(transactionID++);
 
-    ledger ledger1;
-    ledger1.recordTransaction(transaction1);
+    // Hardcoded product catalog for testing
+    ProductRecord gum{1, "Gum", 1.50f, 0.0f, 0.07f, 100};
+    ProductRecord apples{2, "Apples", 2.99f, 1.0f, 0.07f, 50};
 
-    systemState systemState1;
-    systemState1.updateSystemState();
+    // Add items to transaction
+    transaction1.addItem(gum, 2.0);      // 2 units of gum
+    transaction1.addItem(apples, 1.5);   // 1.5 lbs of apples
 
-    override override1;
+    cout << "Subtotal: $"
+          << fixed << setprecision(2)
+          << transaction1.getSubtotal()
+          << endl;
+    cout << "Tax: $" << transaction1.getTaxTotal() << endl;
+    cout << "Total: $" << transaction1.getTotal() << endl;
 
-    scale scale1;
+    // SystemState tests - skeleton to be implemented later
+    // SystemState systemState1;
+    // cout << "\nInitial State: " << systemState1.getStateString() << endl;
+    // systemState1.transition("FirstScan");
+    // cout << "After FirstScan: " << systemState1.getStateString() << endl;
+    // systemState1.transition("FinishAndPay");
+    // cout << "After FinishAndPay: " << systemState1.getStateString() << endl;
+    // systemState1.transition("PaymentSubmitted");
+    // cout << "After PaymentSubmitted: " << systemState1.getStateString() << endl;
+    // systemState1.transition("PaymentAuthorized");
+    // cout << "After PaymentAuthorized: " << systemState1.getStateString() << endl;
 
+    // Commit transaction
+    int entryID = 1;
+    Ledger ledger1 = transaction1.commit(entryID);
+    cout << "\nTransaction committed with entry ID: " << ledger1.entryID << endl;
+    cout << "Ledger Total: $" << ledger1.total << endl;
 
-    
     return 0;
 }

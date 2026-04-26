@@ -1,48 +1,47 @@
-class transaction
+#ifndef TRANSACTION_H
+#define TRANSACTION_H
+
+#include <vector>
+#include <memory>
+#include "productRecord.h"
+#include "transactionItem.h"
+#include "ledger.h"
+
+class Transaction
 {
 public:
-    transaction()
-    {
-        // Constructor implementation
-    }
+    Transaction(int transactionID, int customerID = 0);
 
-    void transaction::addItem(const productRecord& product, double amount)
-    {
-        // Add item to the transaction
-    }
-    void removeItem()
-    {
-        // Remove item from the transaction
-    }
-    void calculateTotal()
-    {
-        // Calculate total amount for the transaction
-    }
-    double getSubtotal() const
-    {
-        // Return the subtotal for the transaction
-    }
-    double getTaxTotal() const
-    {
-        // Return the total tax for the transaction
-    }
-    double getTotal() const
-    {
-        // Return the total amount for the transaction
-    }
-    void cancel()
-    {
-        // Cancel the transaction
-    }
-    void commit()
-    {
-        // Commit the transaction
-    }
-    std::vector<std::unique_ptr<transactionItem>> items;
+    // Item management
+    void addItem(const ProductRecord &product, double amount);
+    void removeItem(size_t index);
+
+    // Calculations
+    void calculateTotal();
+    double getSubtotal() const;
+    double getTaxTotal() const;
+    double getTotal() const;
+
+    // Transaction lifecycle
+    Ledger createLedgerEntry(int entryID) const;
+    void cancel();
+    Ledger commit(int entryID);
+
+    // Accessors
+    int getTransactionID() const { return transactionID; }
+    int getCustomerID() const { return customerID; }
+    size_t getItemCount() const { return items.size(); }
+    bool isPaymentComplete() const { return paymentStatus; }
 
 private:
+    // How transaction stores its items
+    // Vector that has ownership of multiple transactionItems,
+    // Each with a reference to an item in inventory
+    std::vector<std::unique_ptr<TransactionItem>> items;
     int transactionID;
     int customerID;
-    int timeStamp;
+    int timestamp;
     bool paymentStatus;
 };
+
+#endif // TRANSACTION_H

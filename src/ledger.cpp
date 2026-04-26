@@ -1,13 +1,21 @@
 #include "ledger.h"
-// for accounting entry, permanant record, immutable, created after transaction commit
+#include <string>
+
+// For accounting entry, perm record, immutable, created after transaction commit
 
 struct ledger
 {
 
     int entryID;
     int transactionID;
-    float subtotal;
-    float tax;
-    float total;
-    int timestamp;
+    double subtotal;
+    double tax;
+    double total;
+    std::string timestamp;
+
+    std::string getCurrentTimestamp() const {
+        // placeholder for timestamp generation logic
+        return "2024-06-01T12:00:00Z";
+    }
 };
+

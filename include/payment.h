@@ -2,6 +2,8 @@
 #ifndef PAYMENT_H
 #define PAYMENT_H
 class payment {
+    // Skeleton for payment class, will use a paymentStrategy
+
 public:
     payment() {
         // Constructor implementation

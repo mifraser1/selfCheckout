@@ -39,5 +39,5 @@ int toleranceThreshold;
 bool employeeOverrideFlag;
 int overrideID;
 int employeeID;
-time_t timestamp;
+std::string timestamp;
 std::string reason;

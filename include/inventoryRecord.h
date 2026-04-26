@@ -1,8 +1,10 @@
 #ifndef INVENTORYRECORD_H
 #define INVENTORYRECORD_H
 #include <string>
-class item
+class inventoryRecord
 {
+    // Skeleton for inventory record, which will be used to track inventory levels and updates
+
 public:
     inventoryRecord()
     {

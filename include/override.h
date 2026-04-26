@@ -4,6 +4,8 @@
 #include <ctime>
 
 class override {
+    // Skeleton for override class, will be used for employee interventions
+
 public:
     override() {    
         // Constructor implementation
