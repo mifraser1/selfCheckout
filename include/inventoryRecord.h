@@ -16,12 +16,12 @@ public:
         // Method to update inventory records
     }
 
-    void release(int transactionItem)
+    void release(int TransactionItem)
     {
         // Method to release reserved inventory
     }
 
-    void commit(int transactionItem)
+    void commit(int TransactionItem)
     {
         // Method to commit inventory changes
     }

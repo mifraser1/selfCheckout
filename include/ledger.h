@@ -7,13 +7,13 @@
 struct Ledger
 {
     int entryID;
-    int transactionID;
+    int TransactionID;
     double subtotal;
     double tax;
     double total;
     std::string timestamp;
 
-    Ledger() : entryID(0), transactionID(0), subtotal(0.0), 
+    Ledger() : entryID(0), TransactionID(0), subtotal(0.0), 
                tax(0.0), total(0.0), timestamp("") {}
 };
 

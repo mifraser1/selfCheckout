@@ -8,8 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Add new .cpp files here as you implement them
 set(SOURCES
     src/main.cpp
-    src/transaction.cpp
-    src/transactionItem.cpp
+    src/Transaction.cpp
+    src/TransactionItem.cpp
 )
 # In future, automatically find all .cpp files in src/
 # file(GLOB SOURCES "src/*.cpp")

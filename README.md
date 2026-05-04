@@ -40,8 +40,8 @@ cmake --build build
 - Update `CMakeLists.txt` if adding new source files
 
 ## Features (To be implemented)
-- [ ] Pricing Strategy to grow in transactionItems
-- [ ] Fix naming convention for typical C++ program; transactionItem -> TransactionItem
+- [ ] Pricing Strategy to grow in TransactionItems
+- [ ] Fix naming convention for typical C++ program; TransactionItem -> TransactionItem
 - [ ] Weight validation based on expected weight of items
 - [ ] Age validation for certain items
 - [ ] Implement State System logic
@@ -50,7 +50,7 @@ cmake --build build
 - [ ] Implement Scale interface, for Amount
 - [ ] Look into APIs for inventory, accounting, payment
 - [ ] CSV loading infrastructure next
-	- Columns of the ledger CSV should have `entryID` `transactionID` `subtotal` `tax` `total` `timestamp`
+	- Columns of the ledger CSV should have `entryID` `TransactionID` `subtotal` `tax` `total` `timestamp`
 - [ ] Override Class: Should track who (manager ID), when, what was overridden, and reason?
 
 
@@ -60,9 +60,9 @@ Project to simulate the real-world self-checkout system
 
 ## System Description:
 
-Self-Checkout System is a transactional retail system for customers to scan, weigh, and buy items while integrating with external inventory, accounting systems, and employee oversight. Inventory accuracy is improved by reserving items locally for an open transaction and permanently altering inventory after payment. Waste is reduced by fraud detection with weight validation and employee intervention. The system balances security and throughput with usability by incorporating state-based control and human-in-the-loop escalation. 
+Self-Checkout System is a Transactional retail system for customers to scan, weigh, and buy items while integrating with external inventory, accounting systems, and employee oversight. Inventory accuracy is improved by reserving items locally for an open Transaction and permanently altering inventory after payment. Waste is reduced by fraud detection with weight validation and employee intervention. The system balances security and throughput with usability by incorporating state-based control and human-in-the-loop escalation. 
 
-Self-Checkout functional requirements are touch screen UI, bar code scanner, receipt printer, and scale that are integrated with a store inventory system, accounting and payment processing, and employee oversight. The inventory system and accounting are external software for systems of record. The conditions for success are a smooth flow of a customer experience considering voided transactions and anti-theft, the individual items are scanned and the transaction accounted for.
+Self-Checkout functional requirements are touch screen UI, bar code scanner, receipt printer, and scale that are integrated with a store inventory system, accounting and payment processing, and employee oversight. The inventory system and accounting are external software for systems of record. The conditions for success are a smooth flow of a customer experience considering voided Transactions and anti-theft, the individual items are scanned and the Transaction accounted for.
 ## Architecture Overview
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -94,18 +94,18 @@ Self-Checkout functional requirements are touch screen UI, bar code scanner, rec
                     │   Override Records    │
                     └───────────────────────┘
 ```
-Transaction manager: maintain item list, calc totals, manage state, handle rollback, commit transaction
+Transaction manager: maintain item list, calc totals, manage state, handle rollback, commit Transaction
 
 ## Data Model
 To be updated
 
 | Class            | Attributes                                                                                 | Methods                                                                                                                          |
 | ---------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| Transaction      | `transactionID` `customerID` <br>`timestamp`<br>`paymentStatus`                            | `addItem()` `removeItem()` `calculateTotal()` `cancel()` `commit()`                                                              |
+| Transaction      | `TransactionID` `customerID` <br>`timestamp`<br>`paymentStatus`                            | `addItem()` `removeItem()` `calculateTotal()` `cancel()` `commit()`                                                              |
 | TransactionItem  | `taxRate`                    | `calcPrice(itemID, price, weight, taxRate)`                                                                                      |
-| Inventory Record | `sku`<br>`onHand`<br>`reserved`<br>`lastUpdated`<br>                                       | `reserve(itemID, qty)` `release(transactionID)` `commit(transactionID)`                                                          |
-| Payment          | `paymentID` `transactionID` `amount` `status` `method`                                     | `processPayment()`                                                                                                               |
-| Ledger           | `entryID` `transactionID` `subtotal` `tax` `total` `timestamp`                             | `ledgerEntry(customerID, transactionID, total, tax, timestamp)`                                                                  |
+| Inventory Record | `sku`<br>`onHand`<br>`reserved`<br>`lastUpdated`<br>                                       | `reserve(itemID, qty)` `release(TransactionID)` `commit(TransactionID)`                                                          |
+| Payment          | `paymentID` `TransactionID` `amount` `status` `method`                                     | `processPayment()`                                                                                                               |
+| Ledger           | `entryID` `TransactionID` `subtotal` `tax` `total` `timestamp`                             | `ledgerEntry(customerID, TransactionID, total, tax, timestamp)`                                                                  |
 | SystemState      | `currentStatus` `event`                                                                    | `transition(event)`                                                                                                              |
 | Override         | `suspensionCount`<br>`employeeOverrideFlag` `overrideID` `employeeID` `timestamp` `reason` | `toleranceThreshold()` `flagEmployeeOverride()`  `commitTimestamp(timestamp)` `logOverride(employeeID, timestamp)` `authorize()` |
 | Scale            | `deviceID` `status`                                                                        | `readWeight()`                                                                                                                   |
@@ -118,7 +118,7 @@ Customer buys a packaged item (stick of gum)
 
 Customer buys priced per weight (bag of apples)
 
-Customer cancels a transaction
+Customer cancels a Transaction
 
 System detects too many suspensions
 
@@ -130,7 +130,7 @@ Customer buys a packaged item (stick of gum)
 
 Customer buys priced per weight (bag of apples)
 
-Customer cancels a transaction
+Customer cancels a Transaction
 
 System detects too many suspensions
 
@@ -142,7 +142,7 @@ Self-Checkout Employee detects a potential attempt to steal
 
 **Actors:** Customers, Inventory System, Accounting, Payment Processor
 
-**Goal:** Complete a transaction for the customer’s grocery items
+**Goal:** Complete a Transaction for the customer’s grocery items
 
 **Precondition:** The item has a scannable bar code. The self-checkout is in a ready state
 
@@ -152,7 +152,7 @@ Self-Checkout Employee detects a potential attempt to steal
     
 2. Inventory system retrieves item record
     
-3. Inventory system adds the item to the local transaction
+3. Inventory system adds the item to the local Transaction
     
 4. System updates running total with price of gum
     
@@ -166,18 +166,18 @@ Self-Checkout Employee detects a potential attempt to steal
     
 9. Payment is authorized
     
-10. System commits the transaction to the store records, inventory and accounting entry updated
+10. System commits the Transaction to the store records, inventory and accounting entry updated
     
-11. System prints a receipt of the transaction
+11. System prints a receipt of the Transaction
     
 
 **Alternative Flow:**
 
 Scanned item in Step 1 is unreadable: system prompts “Please re-scan or enter the item code” and after three failures alert the self-checkout employee. Suspension counter increments per incident
 
-Payment is declined in Step 9: system prompts a retry, after three attempts cancel the transaction. Suspension counter increments per incident
+Payment is declined in Step 9: system prompts a retry, after three attempts cancel the Transaction. Suspension counter increments per incident
 
-**Post-conditions:** The payment is authorized, the inventory permanently decreased, and accounting records the transaction. Also, a receipt is generated. System returns to ready.
+**Post-conditions:** The payment is authorized, the inventory permanently decreased, and accounting records the Transaction. Also, a receipt is generated. System returns to ready.
 
   
   
@@ -186,7 +186,7 @@ Payment is declined in Step 9: system prompts a retry, after three attempts canc
 
 **Actors:** Customers, Scale, Inventory System, Accounting, Payment Processor
 
-**Goal:** Complete a transaction for the customer’s grocery items
+**Goal:** Complete a Transaction for the customer’s grocery items
 
 **Precondition:** The item has a scannable bar code. The self-checkout is in a ready state
 
@@ -202,7 +202,7 @@ Payment is declined in Step 9: system prompts a retry, after three attempts canc
     
 5. System calculates the price: unit price per pound x measured weight
     
-6. Inventory system adds the item to the local transaction
+6. Inventory system adds the item to the local Transaction
     
 7. System updates running total with items
     
@@ -216,9 +216,9 @@ Payment is declined in Step 9: system prompts a retry, after three attempts canc
     
 12. Payment is authorized
     
-13. System commits the transaction to the store records, inventory and accounting entry updated
+13. System commits the Transaction to the store records, inventory and accounting entry updated
     
-14. System prints a receipt of the transaction
+14. System prints a receipt of the Transaction
     
     **Alternative Flow:**
     
@@ -227,9 +227,9 @@ Scanned item in Step 1 is unreadable: system prompts “Please re-scan or enter 
 
 Item removed or exceeds limit during weighing in Step 3: system prompts “Please re-weigh the item” and after three attempts call over the self-checkout employee. Suspension counter increments per incident
 
-Payment is declined in Step 12: system prompts a retry, after three attempts cancel the transaction. Suspension counter increments per incident
+Payment is declined in Step 12: system prompts a retry, after three attempts cancel the Transaction. Suspension counter increments per incident
 
-**Post-conditions:** The payment is authorized, the inventory permanently decreased, and accounting records the transaction. Also, a receipt is generated. System returns to ready.
+**Post-conditions:** The payment is authorized, the inventory permanently decreased, and accounting records the Transaction. Also, a receipt is generated. System returns to ready.
 
   
   
@@ -238,24 +238,24 @@ Payment is declined in Step 12: system prompts a retry, after three attempts can
 
 **Actors:** Customers, Self-Checkout Employee, Inventory System, Accounting
 
-**Goal:** Cancel a transaction for the customer’s grocery items
+**Goal:** Cancel a Transaction for the customer’s grocery items
 
-**Precondition:** The self-checkout is in a open transaction state
+**Precondition:** The self-checkout is in a open Transaction state
 
 **Main Flow:**
 
-1. Customer selects “Cancel transaction”
+1. Customer selects “Cancel Transaction”
     
-2. System prompts confirmation “Are you sure you want to cancel the transaction”
+2. System prompts confirmation “Are you sure you want to cancel the Transaction”
     
 3. Customer confirms
     
-4. System releases local transaction inventory and running total
+4. System releases local Transaction inventory and running total
     
 
 **Alternative Flow:**
 
-Customer declines canceling the transaction in Step 3: the state of the transaction is resumes
+Customer declines canceling the Transaction in Step 3: the state of the Transaction is resumes
 
 **Post-conditions:** System returns to ready.
 
@@ -268,7 +268,7 @@ Customer declines canceling the transaction in Step 3: the state of the transact
 
 **Goal:** Protect the system from repeated suspensions and ensure throughput
 
-**Precondition:** The self-checkout is in a open transaction state and has been flagged for suspending the transaction five times (threshold configurable)
+**Precondition:** The self-checkout is in a open Transaction state and has been flagged for suspending the Transaction five times (threshold configurable)
 
 **Main Flow:**
 
@@ -276,14 +276,14 @@ Customer declines canceling the transaction in Step 3: the state of the transact
     
 2. Employee provides customer service by inquiring if the customer wants to continue
     
-3. Employee cancels the transaction
+3. Employee cancels the Transaction
     
-4. System releases local transaction inventory and running total
+4. System releases local Transaction inventory and running total
     
 
 **Alternative Flow:**
 
-Customer indicates they would like to continue in Step 2: system resumes the transaction
+Customer indicates they would like to continue in Step 2: system resumes the Transaction
 
 **Post-conditions:** System returns to ready state
 
@@ -294,9 +294,9 @@ Customer indicates they would like to continue in Step 2: system resumes the tra
 
 **Actors:** Customers, Self-Checkout Employee, Inventory System, Accounting
 
-**Goal:** Suspend a transaction for the customer’s selected grocery item
+**Goal:** Suspend a Transaction for the customer’s selected grocery item
 
-**Precondition:** The self-checkout is in a ready or open transaction state
+**Precondition:** The self-checkout is in a ready or open Transaction state
 
 **Main Flow:**
 
@@ -304,18 +304,18 @@ Customer indicates they would like to continue in Step 2: system resumes the tra
     
 2. Customer moves an item to the bagging area without scanning or entering the item’s code
     
-3. Employee inquires into the item with the information the system displays of the transaction
+3. Employee inquires into the item with the information the system displays of the Transaction
     
 4. Customer scans the missing item
     
 
 **Alternative Flow:**
 
-Employee and customer interaction in Step 3 could result in different scenarios depending on what is decided: the employee makes a mistake and does not pursue re-scanning or the customer abandons the transaction in favor of re-scanning the item.
+Employee and customer interaction in Step 3 could result in different scenarios depending on what is decided: the employee makes a mistake and does not pursue re-scanning or the customer abandons the Transaction in favor of re-scanning the item.
 
 Automatic bagging area weight validation compares expected weight from the scale in Step 2: if mismatch exceeds threshold then suspend system for employee intervention. Suspension counter increments
 
-**Post-conditions:** System returns to open transaction and the transaction continues.
+**Post-conditions:** System returns to open Transaction and the Transaction continues.
 
 # Requirements
 ## Non-functional Requirements
@@ -344,9 +344,9 @@ Automatic bagging area weight validation compares expected weight from the scale
     **Description:** Reserve, release, and permanently decrease inventory stock records
 	1. Decrease available inventory when `reserve(itemID, qty)` is called **if sufficient stock exists**
 	2. Reject the reservation with an error if `qty > available stock`
-	3. Associate reserved inventory with a `transactionID`
-	4. Restore reserved inventory when `release(transactionID)` is called
-	5. Permanently decrease inventory when `commit(transactionID)` is called
+	3. Associate reserved inventory with a `TransactionID`
+	4. Restore reserved inventory when `release(TransactionID)` is called
+	5. Permanently decrease inventory when `commit(TransactionID)` is called
 	
 	**Acceptance Criteria (Tests):**
 	
@@ -357,13 +357,13 @@ Automatic bagging area weight validation compares expected weight from the scale
     
     **Priority:** High
     
-    **Notes:** reserve (itemID, qty), release (transactionID), commit (transactionID)
+    **Notes:** reserve (itemID, qty), release (TransactionID), commit (TransactionID)
     
 2. **Requirement ID:** Accounting API REQ-02
     
     **Description:** Reserve, release, and log entries of accounting records.
-    1. Create a ledger entry when a transaction is committed
-	2. Include `customerID`, `transactionID`, `subtotal`, `tax`, `total`, and `timestamp`
+    1. Create a ledger entry when a Transaction is committed
+	2. Include `customerID`, `TransactionID`, `subtotal`, `tax`, `total`, and `timestamp`
 	3. Ensure ledger entries are immutable after creation
 	
 	**Acceptance Criteria:**
@@ -374,12 +374,12 @@ Automatic bagging area weight validation compares expected weight from the scale
     
     **Priority:** High
     
-    **Notes:** ledgerEntry (customerID, transactionID, total, tax, timestamp)
+    **Notes:** ledgerEntry (customerID, TransactionID, total, tax, timestamp)
     
 3. **Requirement ID:** Payment API REQ-03
     
     **Description:** Process customer payment
-    1. Send payment requests including transaction total and payment method
+    1. Send payment requests including Transaction total and payment method
 	2. Receive success or failure response from payment processor
 	3. Transition system state to:
 	    - `Payment Processing` during request
@@ -417,14 +417,14 @@ Automatic bagging area weight validation compares expected weight from the scale
 5. **Requirement ID:** Maintain Item List REQ-05
     
     **Description:** Maintain temporary customer’s inventory list.
-    1. Maintain a temporary transaction record containing:
-    - `transactionID`
+    1. Maintain a temporary Transaction record containing:
+    - `TransactionID`
     - Item IDs
     - Item names
     - Quantities
     - Weights (if applicable)
 	1. Update the list when items are added or removed
-	2. Delete the record when the transaction is canceled or completed
+	2. Delete the record when the Transaction is canceled or completed
 	
 	**Acceptance Criteria:**
 	
@@ -434,7 +434,7 @@ Automatic bagging area weight validation compares expected weight from the scale
 	
     **Priority:** High
     
-    **Notes:** Includes the transactionID, item ids, name, weight, and quantity.
+    **Notes:** Includes the TransactionID, item ids, name, weight, and quantity.
     
 6. **Requirement ID:** Calculate Totals REQ-06
     
@@ -463,7 +463,7 @@ Automatic bagging area weight validation compares expected weight from the scale
 	
 	The system shall:
 	
-	1. Transition from `Idle → Scanning` when a transaction begins
+	1. Transition from `Idle → Scanning` when a Transaction begins
 	2. Transition to `Awaiting Weight` for weight-based items
 	3. Transition to `Awaiting Payment` when scanning is complete
 	4. Prevent invalid state transitions
@@ -481,11 +481,11 @@ Automatic bagging area weight validation compares expected weight from the scale
     
 8. **Requirement ID:** Handle Rollback REQ-08
     
-    **Description:** Software to handle events of canceled transaction, clearing the reserved inventory and transaction records.
-    When a transaction is canceled, the system shall:
+    **Description:** Software to handle events of canceled Transaction, clearing the reserved inventory and Transaction records.
+    When a Transaction is canceled, the system shall:
 
 	1. Release all reserved inventory
-	2. Delete the transaction record
+	2. Delete the Transaction record
 	3. Reset system state to `Idle`
 	
 	**Acceptance Criteria:**
@@ -500,12 +500,12 @@ Automatic bagging area weight validation compares expected weight from the scale
     
 9. **Requirement ID:** Commit Transaction REQ-09
     
-    **Description:** Software to handle the events of a transaction completed.
-    When a transaction is successfully completed, the system shall:
+    **Description:** Software to handle the events of a Transaction completed.
+    When a Transaction is successfully completed, the system shall:
 	
 	1. Commit inventory changes
 	2. Record a ledger entry
-	3. Store a transaction completion timestamp
+	3. Store a Transaction completion timestamp
 	4. Transition system state to `Completed`
 	
 	**Acceptance Criteria:**
@@ -540,7 +540,7 @@ Automatic bagging area weight validation compares expected weight from the scale
     **Description:** Transaction Completion in < 2s, Scale Response in < 1s
 	The system shall:
 	
-	1. Complete transactions within **2 seconds** under normal load
+	1. Complete Transactions within **2 seconds** under normal load
 	2. Process scale input within **1 second**
 	
 	**Acceptance Criteria:**

@@ -1,4 +1,4 @@
-#include "transactionItem.h"
+#include "TransactionItem.h"
 #include "productRecord.h"
 
 TransactionItem::TransactionItem(const ProductRecord &product, double amount)
