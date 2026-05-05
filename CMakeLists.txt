@@ -6,13 +6,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add source files - list only files being actively compiled
 # Add new .cpp files here as you implement them
-set(SOURCES
-    src/main.cpp
-    src/Transaction.cpp
-    src/TransactionItem.cpp
-)
+# set(SOURCES
+#     src/main.cpp
+#     src/Transaction.cpp
+#     src/TransactionItem.cpp
+# )
 # In future, automatically find all .cpp files in src/
-# file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/*.cpp")
 
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)

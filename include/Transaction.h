@@ -7,30 +7,35 @@
 #include "TransactionItem.h"
 #include "ledger.h"
 #include "TransactionState.h"
+#include "PaymentStrategy.h"
+#include "PricingEngine.h"
+#include "PricingRule.h"
 
-// Owns data and executes changes
+// Owns data and executes changes, stable
 
 class Transaction
 {
 public:
     Transaction(int id);
-    Transaction(int TransactionID, int customerID = 0);
+    // Transaction(int TransactionID, int customerID = 0);
 
     // Calculations
-    void calculateTotal();
+    PricingResult getPricing() const;
     double getSubtotal() const;
     double getTaxTotal() const;
     double getTotal() const;
+    const std::vector<std::unique_ptr<TransactionItem>> &getItems() const { return items; };
+    const PaymentStrategy* getPaymentStrategy() const { return paymentStrategy.get(); };
 
     // Transaction lifecycle
     Ledger createLedgerEntry(int entryID) const;
     Ledger commit(int entryID);
 
     // Accessors
-    int getTransactionID() const { return TransactionID; }
-    int getCustomerID() const { return customerID; }
-    size_t getItemCount() const { return items.size(); }
-    bool isPaymentComplete() const { return paymentStatus; }
+    // int getTransactionID() const { return TransactionID; }
+    // int getCustomerID() const { return customerID; }
+    // size_t getItemCount() const { return items.size(); }
+    // bool isPaymentComplete() const { return paymentStatus; }
 
     void setState(std::unique_ptr<TransactionState> newState);
 
@@ -53,10 +58,10 @@ private:
     // Each with a reference to an item in inventory
     std::vector<std::unique_ptr<TransactionItem>> items;
     std::unique_ptr<TransactionState> state; // Current state pointer
+    std::unique_ptr<PaymentStrategy> paymentStrategy; // Payment handling strategy
+    std::unique_ptr<PricingEngine> pricingEngine; // Pricing strategy for totals
     int TransactionID;
-    int customerID;
-    int timestamp;
-    bool paymentStatus;
+    bool paymentStatus = false;
 
     // Internal methods for state actions
     void applyAddItem(const ProductRecord &, double);

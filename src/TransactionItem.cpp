@@ -4,12 +4,12 @@
 TransactionItem::TransactionItem(const ProductRecord &product, double amount)
     : product(product), amount(amount) {}
 
-double TransactionItem::calcPrice() const
+double TransactionItem::getBasePrice() const
 {
     return product.price * amount;
 }
 
-double TransactionItem::taxCalc() const
+double TransactionItem::getTax() const
 {
-    return calcPrice() * product.taxRate;
+    return getBasePrice() * product.taxRate;
 }
