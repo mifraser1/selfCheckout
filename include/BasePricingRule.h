@@ -1,10 +1,12 @@
-#ifndef BasicPricingRule_H
-#define BasicPricingRule_H
+#ifndef BasePricingRule_H
+#define BasePricingRule_H
 #include "PricingRule.h"
 
-class BasicPricingRule : public PricingRule
+class BasePricingRule : public PricingRule
 {
 public:
+    BasePricingRule();
+
     void apply(PricingContext &context) override;
 };
-#endif // BasicPricingRule_H
+#endif // BasePricingRule_H
