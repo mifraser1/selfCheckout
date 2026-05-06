@@ -7,4 +7,5 @@ void BGPricingRule::apply(PricingContext &context)
     for (const auto &item : context.items) {
         context.itemIDs.insert(item->getProduct().itemID);
     }
+    // Then, implement rule based on IDs
 }

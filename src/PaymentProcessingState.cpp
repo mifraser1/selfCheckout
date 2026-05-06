@@ -3,6 +3,7 @@
 #include "CompletedState.h"
 #include "AwaitingPaymentState.h"
 #include "TransactionState.h"
+#include "Ledger.h"
 #include <thread>
 #include <chrono>
 
@@ -15,16 +16,15 @@ Result PaymentProcessingState::removeItem(Transaction& transaction, int index) {
 Result PaymentProcessingState::finishScanning(Transaction& transaction) {
     return Result::InvalidState;
 }
-Result PaymentProcessingState::processPayment(Transaction& transaction) {
-    // Simulate delay  
+Result PaymentProcessingState::processPayment(Transaction& transaction, Ledger& ledger) {
+    // Simulate delay of payment
     std::this_thread::sleep_for(std::chrono::seconds(2)); // Simulate processing delay
 
-    // Simulate payment success
+    // Simulate payment success with assignment
     bool paymentSuccess = true; // This would be determined by actual payment processing logic
 
     if(paymentSuccess) {
-        transaction.applyCommit(transaction.getTransactionID()); // Finalize transaction
-        transaction.setState(std::make_unique<CompletedState>());
+        transaction.applyCommit(ledger); // Finalize transaction
         return Result::Success;
     } else {
         // optional to rollback to awaiting state

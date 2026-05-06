@@ -9,6 +9,7 @@ class PricingRule;
 class Transaction;
 
 // Recomputed at any time, dynamic and stateless
+// Pure computation
 class PricingEngine
 {
 private:

@@ -1,7 +1,7 @@
-#ifndef Transaction_ITEM_H
-#define Transaction_ITEM_H
+#ifndef TRANSACTION_ITEM_H
+#define TRANSACTION_ITEM_H
 #include <string>
-#include "productRecord.h"
+#include "ProductRecord.h"
 
 // Exposes base price and tax rate
 class TransactionItem

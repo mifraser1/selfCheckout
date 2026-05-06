@@ -1,7 +1,7 @@
 #include "Transaction.h"
 #include "TransactionItem.h"
-#include "ledger.h"
-#include "productRecord.h"
+#include "Ledger.h"
+#include "ProductRecord.h"
 #include "ScanningState.h"
 #include "AwaitingPaymentState.h"
 #include "PaymentProcessingState.h"
@@ -14,18 +14,16 @@
 #include <memory>
 #include <ctime>
 
-Transaction::Transaction(int id)
-    : TransactionID(id)
+Transaction::Transaction()
 {
     state = std::make_unique<ScanningState>();
     pricingEngine = std::make_unique<PricingEngine>();
 
-    for (auto rule : PricingRulesBehavior::createDefaultRules()) {
+    for (auto rule : PricingRulesBehavior::createDefaultRules())
+    {
         pricingEngine->addPricingRule(std::move(rule));
     }
 }
-
-
 
 void Transaction::setState(std::unique_ptr<TransactionState> newState)
 {
@@ -77,15 +75,20 @@ void Transaction::applyCancel()
     paymentStatus = false;
 }
 
-Ledger Transaction::applyCommit(int entryID)
+void Transaction::applyCommit(Ledger &ledger)
 {
     // Commit the Transaction
-    Ledger entry = createLedgerEntry(entryID);
+    // Create ledger entry to assign IDs and store snapshot
+    ledger.createLedgerEntry(*this);
 
-    items.clear();        // Transaction is complete, clear items
-    paymentStatus = true; // mark as paid
+    items.clear(); // Transaction is complete, clear items
+                   // paymentStatus = true; // mark as paid
 
-    return entry;
+    // Move state
+    setState(std::make_unique<CompletedState>());
+
+    // Stored in Ledger not returned
+    // return entry;
 }
 
 PricingResult Transaction::getPricing() const
@@ -106,19 +109,4 @@ double Transaction::getTaxTotal() const
 double Transaction::getTotal() const
 {
     return getPricing().total;
-}
-
-Ledger Transaction::createLedgerEntry(int entryID) const
-{
-    Ledger entry;
-    PricingResult pricing = getPricing();
-
-    entry.entryID = entryID;
-    entry.TransactionID = TransactionID;
-    entry.subtotal = pricing.subtotal;
-    entry.tax = pricing.tax;
-    entry.total = pricing.total;
-    entry.timestamp = std::to_string(std::time(nullptr));
-
-    return entry;
 }

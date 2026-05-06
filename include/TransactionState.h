@@ -17,7 +17,7 @@ public:
     ProductRecord&, double) = 0;
     virtual Result removeItem(Transaction&, int index) = 0;
     virtual Result finishScanning(Transaction&) = 0;
-    virtual Result processPayment(Transaction&) = 0;
+    virtual Result processPayment(Transaction&, Ledger&) = 0;
     virtual Result cancel(Transaction&) = 0;
 
     virtual ~TransactionState() = default;

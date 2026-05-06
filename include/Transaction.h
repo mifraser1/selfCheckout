@@ -3,20 +3,21 @@
 
 #include <vector>
 #include <memory>
-#include "productRecord.h"
+#include "ProductRecord.h"
 #include "TransactionItem.h"
-#include "ledger.h"
+#include "Ledger.h"
 #include "TransactionState.h"
 #include "PaymentStrategy.h"
 #include "PricingEngine.h"
 #include "PricingRule.h"
+#include "PricingTypes.h"
 
 // Owns data and executes changes, stable
 
 class Transaction
 {
 public:
-    Transaction(int id);
+    Transaction();
     // Transaction(int TransactionID, int customerID = 0);
 
     // Calculations
@@ -25,13 +26,15 @@ public:
     double getTaxTotal() const;
     double getTotal() const;
     const std::vector<std::unique_ptr<TransactionItem>> &getItems() const { return items; };
-    const PaymentStrategy* getPaymentStrategy() const { return paymentStrategy.get(); };
+    const PaymentType& getPaymentType() const { return paymentType; };
 
     // Transaction lifecycle
-    Ledger createLedgerEntry(int entryID) const;
-    Ledger commit(int entryID);
+    // All handled by ledger
+    // Ledger createLedgerEntry(int entryID) const;
+    // Ledger commit(int entryID);
 
     // Accessors
+    PaymentType getpaymentType() {return paymentType;}
     // int getTransactionID() const { return TransactionID; }
     // int getCustomerID() const { return customerID; }
     // size_t getItemCount() const { return items.size(); }
@@ -60,14 +63,16 @@ private:
     std::unique_ptr<TransactionState> state; // Current state pointer
     std::unique_ptr<PaymentStrategy> paymentStrategy; // Payment handling strategy
     std::unique_ptr<PricingEngine> pricingEngine; // Pricing strategy for totals
-    int TransactionID;
-    bool paymentStatus = false;
+
+    PaymentType paymentType;
+    bool paymentStatus = false; // temp for payemnt processing
 
     // Internal methods for state actions
     void applyAddItem(const ProductRecord &, double);
     void applyRemoveItem(int index);
     void applyCancel();
-    Ledger applyCommit(int entryID);
+    void applyCommit(Ledger& ledger);
 };
+enum PaymentType { Cash, Card } ;
 
 #endif // Transaction_H
