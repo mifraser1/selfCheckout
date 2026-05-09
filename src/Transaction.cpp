@@ -7,28 +7,31 @@
 #include "PaymentProcessingState.h"
 #include "CompletedState.h"
 #include "PricingEngine.h"
-#include "PricingRulesBehavior.h"
+#include "BasePricingRule.h"
 #include <string>
 #include <stdexcept>
 #include <vector>
 #include <memory>
 #include <ctime>
+#include <iostream>
 
 Transaction::Transaction()
 {
     state = std::make_unique<ScanningState>();
-    pricingEngine = std::make_unique<PricingEngine>();
 
-    for (auto rule : PricingRulesBehavior::createDefaultRules())
-    {
-        pricingEngine->addPricingRule(std::move(rule));
-    }
+    pricingEngine.addPricingRule(std::make_unique<BasePricingRule>());
+    pricingEngine.addPricingRule(std::make_unique<DiscountPricingRule>());
+    pricingEngine.addPricingRule(std::make_unique<TaxRule>());
 }
 
 void Transaction::setState(std::unique_ptr<TransactionState> newState)
 {
     state = std::move(newState);
 }
+
+void Transaction::setPaymentStrategy(std::unique_ptr<PaymentStrategy> strategy) {
+    paymentStrategy = std::move(strategy);
+};
 
 Result Transaction::addItem(const ProductRecord &product, double amount)
 {
@@ -45,9 +48,8 @@ Result Transaction::finishScanning()
     return state->finishScanning(*this);
 }
 
-Result Transaction::processPayment()
-{
-    return state->processPayment(*this);
+Result Transaction::processPayment(Ledger& ledger) {
+    return state->processPayment(*this, ledger);
 }
 
 Result Transaction::cancel()
@@ -67,6 +69,27 @@ void Transaction::applyRemoveItem(int index)
         throw std::out_of_range("Invalid item index");
     }
     items.erase(items.begin() + index);
+}
+
+void Transaction::applyProcessPayment(Ledger &ledger)
+{
+    auto result = getPricing();
+
+    if (!paymentStrategy)
+    {
+        throw std::runtime_error("No payment strategy set");
+    }
+
+    bool success = paymentStrategy->processPayment(result.total);
+
+    if (success)
+    {
+        applyCommit(ledger);
+    }
+    else
+    {
+        std::cout << "Payment failed\n";
+    }
 }
 
 void Transaction::applyCancel()
@@ -93,7 +116,7 @@ void Transaction::applyCommit(Ledger &ledger)
 
 PricingResult Transaction::getPricing() const
 {
-    return pricingEngine->calculate(*this);
+    return const_cast<PricingEngine&>(pricingEngine).calculate(*this);
 }
 
 double Transaction::getSubtotal() const

@@ -1,13 +1,8 @@
 #include <iostream>
 #include "Transaction.h"
 #include "TransactionItem.h"
-// #include "systemState.h"
-#include "ledger.h"
-// #include "override.h"
-// #include "scale.h"
-// #include "inventoryRecord.h"
-// #include "payment.h"
-#include "productRecord.h"
+#include "Ledger.h"
+#include "ProductRecord.h"
 #include <iomanip>
 
 using namespace std;
@@ -32,21 +27,27 @@ int main()
           ProductRecord apples{2, "Apples", 2.99f, 1.0f, 0.07f, 50};
 
           // Add items to Transaction
-          Transaction1.addItem(gum, 2.0);    // 2 units of gum
-          Transaction1.addItem(apples, 1.5); // 1.5 lbs of apples
+          tx.addItem(gum, 2.0);    // 2 units of gum
+          tx.addItem(apples, 1.5); // 1.5 lbs of apples
 
           // Placeholder for display, should be real-time
           cout << "Subtotal: $"
                << fixed << setprecision(2)
-               << Transaction1.getSubtotal()
+               << tx.getSubtotal()
                << endl;
-          cout << "Tax: $" << Transaction1.getTaxTotal() << endl;
-          cout << "Total: $" << Transaction1.getTotal() << endl;
+          cout << "Tax: $" << tx.getTaxTotal() << endl;
+          cout << "Total: $" << tx.getTotal() << endl;
 
           // Payment and commit Transaction
           tx.processPayment(ledger);
           // Replace with new transaction
           tx = Transaction();
+
+          char choice;
+          cout << "Finished Scanning: Y/N" << endl;
+          cin >> choice;
+          if (choice == 'N')
+               return false;
      }
      return 0;
 }

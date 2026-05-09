@@ -12,7 +12,7 @@ Result AwaitingPaymentState::removeItem(Transaction& Transaction, int index) {
 Result AwaitingPaymentState::finishScanning(Transaction& Transaction) {
     return Result::InvalidState;
 }
-Result AwaitingPaymentState::processPayment(Transaction& Transaction) {
+Result AwaitingPaymentState::processPayment(Transaction& Transaction, Ledger& ledger) {
     Transaction.setState(std::make_unique<PaymentProcessingState>());
     return Result::Success;
 }

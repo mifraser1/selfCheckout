@@ -11,7 +11,7 @@ Result CompletedState::removeItem(Transaction& Transaction, int index) {
 Result CompletedState::finishScanning(Transaction& Transaction) {
     return Result::InvalidState;
 }
-Result CompletedState::processPayment(Transaction& Transaction) {
+Result CompletedState::processPayment(Transaction& Transaction, Ledger& ledger) {
     return Result::InvalidState;
 }
 Result CompletedState::cancel(Transaction& Transaction) {

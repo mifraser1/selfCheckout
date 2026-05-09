@@ -5,6 +5,13 @@
 #include <ctime>
 #include <vector>
 
+struct LedgerItem
+{
+    int itemID;
+    double quantity;
+    double total;
+};
+
 struct LedgerEntry
 {
     int entryID;
@@ -20,13 +27,6 @@ struct LedgerEntry
 
     LedgerEntry() : entryID(0), TransactionID(0), subtotal(0.0),
                     tax(0.0), total(0.0), timestamp("") {}
-};
-
-struct LedgerItem
-{
-    int itemID;
-    double quantity;
-    double total;
 };
 
 class Transaction;

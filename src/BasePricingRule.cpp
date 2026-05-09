@@ -1,6 +1,6 @@
 #include "BasePricingRule.h"
 
-void BasicPricingRule::apply(PricingContext &context)
+void BasePricingRule::apply(PricingContext &context)
 {
     for (const auto &item : context.items)
     {

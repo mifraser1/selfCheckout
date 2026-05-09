@@ -2,6 +2,7 @@
 #define TransactionSTATE_H
 class Transaction; // Forward declaration
 class ProductRecord; // Forward declaration
+class Ledger; // Forward declaration
 enum class Result{
     Success,
     InvalidState,
