@@ -5,7 +5,7 @@
 class BasePricingRule : public PricingRule
 {
 public:
-    BasePricingRule();
+    // BasePricingRule();
 
     void apply(PricingContext &context) override;
 };

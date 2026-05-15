@@ -7,31 +7,40 @@
 #include <thread>
 #include <chrono>
 
-Result PaymentProcessingState::addItem(Transaction& transaction, const ProductRecord& product, double amount) {
+Result PaymentProcessingState::addItem(Transaction &transaction, const ProductRecord &product, double amount, double weight)
+{
     return Result::InvalidState;
 }
-Result PaymentProcessingState::removeItem(Transaction& transaction, int index) {
+Result PaymentProcessingState::removeItem(Transaction &transaction, int index)
+{
     return Result::InvalidState;
 }
-Result PaymentProcessingState::finishScanning(Transaction& transaction) {
+Result PaymentProcessingState::finishScanning(Transaction &transaction)
+{
     return Result::InvalidState;
 }
-Result PaymentProcessingState::processPayment(Transaction& transaction, Ledger& ledger) {
+Result PaymentProcessingState::processPayment(Transaction &transaction, Ledger &ledger)
+{
     // Simulate delay of payment
     std::this_thread::sleep_for(std::chrono::seconds(2)); // Simulate processing delay
 
     // Simulate payment success with assignment
     bool paymentSuccess = true; // This would be determined by actual payment processing logic
 
-    if(paymentSuccess) {
-        transaction.applyCommit(ledger); // Finalize transaction
+    if (paymentSuccess)
+    {
+        transaction.applyProcessPayment(ledger);
         return Result::Success;
-    } else {
+    }
+    else
+    {
         // optional to rollback to awaiting state
         // transaction.setState(std::make_unique<AwaitingPaymentState>()); // Revert to awaiting payment state
+
         return Result::PaymentFailed;
     }
 }
-Result PaymentProcessingState::cancel(Transaction& transaction) {
+Result PaymentProcessingState::cancel(Transaction &transaction)
+{
     return Result::InvalidState;
 }

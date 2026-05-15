@@ -5,7 +5,7 @@
 
 class Transaction; // Forward declaration
 
-// How pricing is derived step-by-step
+// How pricing/discount is derived step-by-step
 // Each rule transforms the shared pricing context.
 class PricingRule
 {

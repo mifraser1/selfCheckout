@@ -1,5 +1,6 @@
 #include "Ledger.h"
 #include "Transaction.h"
+#include "Scale.h"
 #include <string>
 #include <ctime>
 #include <vector>
@@ -23,7 +24,11 @@ LedgerEntry Ledger::createLedgerEntry(const Transaction &tx)
         {
             LedgerItem li;
             li.itemID = (item->getProduct()).itemID;
-            li.quantity = item->getAmount();
+            if (item->getPricingType() == PricingType::PerUnit) {
+                li.quantity = item->getAmount();
+            } else if (item->getPricingType() == PricingType::PerWeight) {
+                li.quantity = item->getWeight();
+            }
             li.total = item->getBasePrice();
 
             // Store items

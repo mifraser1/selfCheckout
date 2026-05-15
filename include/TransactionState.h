@@ -6,7 +6,8 @@ class Ledger; // Forward declaration
 enum class Result{
     Success,
     InvalidState,
-    PaymentFailed
+    PaymentFailed,
+    Failure
 }; 
 
 // Rules and transitions
@@ -15,7 +16,7 @@ enum class Result{
 class TransactionState {
 public:
     virtual Result addItem(Transaction&, const
-    ProductRecord&, double) = 0;
+    ProductRecord&, double, double) = 0;
     virtual Result removeItem(Transaction&, int index) = 0;
     virtual Result finishScanning(Transaction&) = 0;
     virtual Result processPayment(Transaction&, Ledger&) = 0;

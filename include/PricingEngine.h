@@ -9,7 +9,7 @@ class PricingRule;
 class Transaction;
 
 // Recomputed at any time, dynamic and stateless
-// Pure computation
+// Pure computation of TOTALS
 class PricingEngine
 {
 private:

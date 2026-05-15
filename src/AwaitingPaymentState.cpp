@@ -3,7 +3,7 @@
 #include "TransactionState.h"
 #include "PaymentProcessingState.h"
 
-Result AwaitingPaymentState::addItem(Transaction& Transaction, const ProductRecord& product, double amount) {
+Result AwaitingPaymentState::addItem(Transaction& Transaction, const ProductRecord& product, double amount, double weight) {
     return Result::InvalidState;
 }
 Result AwaitingPaymentState::removeItem(Transaction& Transaction, int index) {

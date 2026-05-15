@@ -24,11 +24,11 @@ public:
     double getSubtotal() const;
     double getTaxTotal() const;
     double getTotal() const;
+    const PaymentType &getPaymentType() const { return paymentType; };
     const std::vector<std::unique_ptr<TransactionItem>> &getItems() const { return items; };
-    
+
     void setState(std::unique_ptr<TransactionState> newState);
     void setPaymentStrategy(std::unique_ptr<PaymentStrategy> paymentStratey);
-    const PaymentType& getPaymentType() const { return paymentType; };
 
     // Accessors
     // int getTransactionID() const { return TransactionID; }
@@ -37,10 +37,10 @@ public:
     // bool isPaymentComplete() const { return paymentStatus; }
 
     // Public API for state transitions, delegates to current state
-    Result addItem(const ProductRecord &, double);
+    Result addItem(const ProductRecord &, double, double);
     Result removeItem(int index);
     Result finishScanning();
-    Result processPayment(Ledger& ledger);
+    Result processPayment(Ledger &ledger);
     Result cancel();
 
     // State implementations access internal methods
@@ -54,7 +54,7 @@ private:
     // Vector that has ownership of multiple TransactionItems,
     // Each with a reference to an item in inventory
     std::vector<std::unique_ptr<TransactionItem>> items;
-    std::unique_ptr<TransactionState> state; // Current state pointer
+    std::unique_ptr<TransactionState> state;          // Current state pointer
     std::unique_ptr<PaymentStrategy> paymentStrategy; // Payment handling strategy
     PricingEngine pricingEngine;
 
@@ -62,12 +62,16 @@ private:
     bool paymentStatus = false; // Temp for payment processing
 
     // Internal methods for state actions
-    void applyAddItem(const ProductRecord &, double);
+    void applyAddItem(const ProductRecord &, double, double);
     void applyRemoveItem(int index);
-    void applyProcessPayment(Ledger& ledger);
+    void applyProcessPayment(Ledger &ledger);
     void applyCancel();
-    void applyCommit(Ledger& ledger);
+    void applyCommit(Ledger &ledger);
 };
-enum PaymentType { Cash, Card } ;
+enum PaymentType
+{
+    Cash,
+    Card
+};
 
 #endif // Transaction_H

@@ -1,18 +1,17 @@
-class scale {
+class Scale
+{
     // Skeleton for scale class, will be used to read weights
-
+    // An abstraction of a real-world device
 public:
-    scale() {
-        // Constructor implementation
-    }
-
-    float readWeight() {
-        // Method to read weight from the scale
+    Scale();
+    virtual double readWeight() = 0;
+    virtual ~Scale() = default;
+    int getDeviceID() const
+    {
+        return deviceID;
     }
 
 private:
+    double weight;
     int deviceID;
-    bool status;
-
-
 };

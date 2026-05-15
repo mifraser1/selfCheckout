@@ -3,8 +3,8 @@
 #include "AwaitingPaymentState.h"
 
 Result ScanningState::addItem(Transaction& transaction, 
-    const ProductRecord& product, double amount) {
-    transaction.applyAddItem(product, amount);
+    const ProductRecord& product, double amount, double weight) {
+    transaction.applyAddItem(product, amount, weight);
     return Result::Success;
 }
 Result ScanningState::removeItem(Transaction& Transaction, 
@@ -18,7 +18,7 @@ Result ScanningState::finishScanning(Transaction& Transaction) {
     return Result::Success;
 }
 
-Result ScanningState::processPayment(Transaction& Transaction) {
+Result ScanningState::processPayment(Transaction& Transaction, Ledger& ledger) {
     return Result::InvalidState; // Can't process payment while scanning
 }
 

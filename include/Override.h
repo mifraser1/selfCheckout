@@ -3,11 +3,11 @@
 #include <string>
 #include <ctime>
 
-class override {
+class Override {
     // Skeleton for override class, will be used for employee interventions
 
 public:
-    override() {    
+    Override() {    
         // Constructor implementation
     }
 

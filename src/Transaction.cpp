@@ -8,6 +8,8 @@
 #include "CompletedState.h"
 #include "PricingEngine.h"
 #include "BasePricingRule.h"
+#include "DiscountPricingRule.h"
+#include "TaxRule.h"
 #include <string>
 #include <stdexcept>
 #include <vector>
@@ -29,13 +31,14 @@ void Transaction::setState(std::unique_ptr<TransactionState> newState)
     state = std::move(newState);
 }
 
-void Transaction::setPaymentStrategy(std::unique_ptr<PaymentStrategy> strategy) {
+void Transaction::setPaymentStrategy(std::unique_ptr<PaymentStrategy> strategy)
+{
     paymentStrategy = std::move(strategy);
 };
 
-Result Transaction::addItem(const ProductRecord &product, double amount)
+Result Transaction::addItem(const ProductRecord &product, double amount = 0, double weight = 0.0)
 {
-    return state->addItem(*this, product, amount);
+    return state->addItem(*this, product, amount, weight);
 }
 
 Result Transaction::removeItem(int index)
@@ -48,7 +51,8 @@ Result Transaction::finishScanning()
     return state->finishScanning(*this);
 }
 
-Result Transaction::processPayment(Ledger& ledger) {
+Result Transaction::processPayment(Ledger &ledger)
+{
     return state->processPayment(*this, ledger);
 }
 
@@ -57,9 +61,9 @@ Result Transaction::cancel()
     return state->cancel(*this);
 }
 
-void Transaction::applyAddItem(const ProductRecord &product, double amount)
+void Transaction::applyAddItem(const ProductRecord &product, double amount, double weight)
 {
-    items.push_back(std::make_unique<TransactionItem>(product, amount));
+    items.push_back(std::make_unique<TransactionItem>(product, amount, weight));
 }
 
 void Transaction::applyRemoveItem(int index)
@@ -82,13 +86,10 @@ void Transaction::applyProcessPayment(Ledger &ledger)
 
     bool success = paymentStrategy->processPayment(result.total);
 
+    // Double check then commit Transaction
     if (success)
     {
         applyCommit(ledger);
-    }
-    else
-    {
-        std::cout << "Payment failed\n";
     }
 }
 
@@ -116,7 +117,7 @@ void Transaction::applyCommit(Ledger &ledger)
 
 PricingResult Transaction::getPricing() const
 {
-    return const_cast<PricingEngine&>(pricingEngine).calculate(*this);
+    return const_cast<PricingEngine &>(pricingEngine).calculate(*this);
 }
 
 double Transaction::getSubtotal() const

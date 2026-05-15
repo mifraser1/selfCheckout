@@ -6,7 +6,7 @@
 class DiscountPricingRule : public PricingRule  
 {
 public:
-    DiscountPricingRule();
+    // DiscountPricingRule();
 
     void apply(PricingContext &context) override;
 };

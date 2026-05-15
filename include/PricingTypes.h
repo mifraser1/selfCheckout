@@ -1,6 +1,8 @@
 #ifndef PricingTypes_H
 #define PricingTypes_H
 
+#include "TransactionItem.h"
+#include "Transaction.h"
 #include <vector>
 #include <memory>
 #include <unordered_set>

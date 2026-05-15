@@ -2,7 +2,7 @@
 #include "Transaction.h"
 
 // Terminal state
-Result CompletedState::addItem(Transaction& Transaction, const ProductRecord& product, double amount) {
+Result CompletedState::addItem(Transaction& Transaction, const ProductRecord& product, double amount, double weight) {
     return Result::InvalidState;
 }
 Result CompletedState::removeItem(Transaction& Transaction, int index) {

@@ -40,18 +40,18 @@ cmake --build build
 - Update `CMakeLists.txt` if adding new source files
 
 ## Features (To be implemented)
-- [ ] Pricing Strategy to grow in TransactionItems
-- [ ] Fix naming convention for typical C++ program; TransactionItem -> TransactionItem
+- [ ] Pricing Strategy based on ID
 - [ ] Weight validation based on expected weight of items
 - [ ] Age validation for certain items
-- [ ] Implement State System logic
-	- Invalid actions in wrong states silently fail
-		- Instead throw exceptions and return error codes
+- [x] Implement State System logic
+- [ ] Instead throw exceptions and return error codes
 - [ ] Implement Scale interface, for Amount
 - [ ] Look into APIs for inventory, accounting, payment
 - [ ] CSV loading infrastructure next
 	- Columns of the ledger CSV should have `entryID` `TransactionID` `subtotal` `tax` `total` `timestamp`
 - [ ] Override Class: Should track who (manager ID), when, what was overridden, and reason?
+- [ ] Controller Interface
+	- MockScale fakeScale; InventoryRecord inventoryRecord; Ledger ledgerEntry;CheckoutSystem checkout(fakeScale);
 
 
 
@@ -60,7 +60,7 @@ Project to simulate the real-world self-checkout system
 
 ## System Description:
 
-Self-Checkout System is a Transactional retail system for customers to scan, weigh, and buy items while integrating with external inventory, accounting systems, and employee oversight. Inventory accuracy is improved by reserving items locally for an open Transaction and permanently altering inventory after payment. Waste is reduced by fraud detection with weight validation and employee intervention. The system balances security and throughput with usability by incorporating state-based control and human-in-the-loop escalation. 
+Self-Checkout System is a transactional retail system for customers to scan, weigh, and buy items while integrating with external inventory, accounting systems, and employee oversight. Inventory accuracy is improved by reserving items locally for an open Transaction and permanently altering inventory after payment. Waste is reduced by fraud detection with weight validation and employee intervention. The system balances security and throughput with usability by incorporating state-based control and human-in-the-loop escalation. 
 
 Self-Checkout functional requirements are touch screen UI, bar code scanner, receipt printer, and scale that are integrated with a store inventory system, accounting and payment processing, and employee oversight. The inventory system and accounting are external software for systems of record. The conditions for success are a smooth flow of a customer experience considering voided Transactions and anti-theft, the individual items are scanned and the Transaction accounted for.
 ## Architecture Overview

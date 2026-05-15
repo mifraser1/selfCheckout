@@ -1,13 +1,14 @@
-#ifndef SCANNINGSTATE_H
-#define SCANNINGSTATE_H
+#ifndef CriticalState_h
+#define CriticalState_h
 #include "TransactionState.h"
+#include "Transaction.h"
 
-class ScanningState : public TransactionState {
+class CriticalState : public TransactionState {
 public:
     Result addItem(Transaction&, const ProductRecord&, double, double) override;
-    Result removeItem(Transaction& , int index) override;
+    Result removeItem(Transaction&, int index) override;
     Result finishScanning(Transaction&) override;
     Result processPayment(Transaction&, Ledger&) override;
     Result cancel(Transaction&) override;
-};
-#endif // SCANNINGSTATE_H
+};  
+#endif // CriticalState_h
