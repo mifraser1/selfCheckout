@@ -1,24 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
-project(selfCheckout)
+project(SelfCheckoutProject CXX)
+
+# 1. Automatically find all .cpp files in the src folder
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+
+# 2. Define the executable target using the found source files
+add_executable(selfCheckout ${SOURCES})
+
+# 3. Tell CMake where to look for your header (.h) files
+target_include_directories(selfCheckout PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Add source files - list only files being actively compiled
-# Add new .cpp files here as you implement them
-# set(SOURCES
-#     src/main.cpp
-#     src/Transaction.cpp
-#     src/TransactionItem.cpp
-# )
-# In future, automatically find all .cpp files in src/
-file(GLOB SOURCES "src/*.cpp")
-
-# Include directories
-include_directories(${PROJECT_SOURCE_DIR}/include)
-
-# Create executable
-add_executable(selfCheckout ${SOURCES})
-
-# Optional: Add any libraries or compiler flags here
-target_compile_options(selfCheckout PRIVATE -Wall -Wextra -Wpedantic)

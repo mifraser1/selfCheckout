@@ -41,7 +41,7 @@ private:
     std::vector<LedgerEntry> entries;
 
 public:
-    LedgerEntry createLedgerEntry(const Transaction &tx) {}
+    LedgerEntry createLedgerEntry(const Transaction &tx);
     void refund(LedgerEntry& entry);
 };
 

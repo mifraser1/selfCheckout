@@ -2,15 +2,15 @@
 #define PricingTypes_H
 
 #include "TransactionItem.h"
-#include "Transaction.h"
 #include <vector>
 #include <memory>
 #include <unordered_set>
 
-// Forward declarations
-class Transaction;
-
-// Returned for visibility into calculations
+enum PaymentType
+{
+    Cash,
+    Card
+};
 
 struct PricingContext
 {
@@ -30,5 +30,6 @@ struct PricingResult
     double tax;
     double subtotal;
 };
+
 
 #endif // PricingTypes_H

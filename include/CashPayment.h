@@ -4,8 +4,7 @@
 
 class CashPayment : public PaymentStrategy {
 public:
-    bool processPayment(double amount) override {
-    }
+    bool processPayment(double amount) override;
 };
 
 #endif // CashPayment_H

@@ -53,7 +53,18 @@ cmake --build build
 - [ ] Controller Interface
 	- MockScale fakeScale; InventoryRecord inventoryRecord; Ledger ledgerEntry;CheckoutSystem checkout(fakeScale);
 
+## Example Output
+Self-Checkout System Simulation
 
+Scanning Items...
+Remove Item Scanned
+
+Finished Scanning
+Processing Payment...
+Subtotal: $2.70
+Tax: $0.21
+Total: $2.91
+Transaction Complete (System Ready)
 
 # Self-Checkout
 Project to simulate the real-world self-checkout system

@@ -1,3 +1,5 @@
+#ifndef Scale_H
+#define Scale_H
 class Scale
 {
     // Skeleton for scale class, will be used to read weights
@@ -15,3 +17,4 @@ private:
     double weight;
     int deviceID;
 };
+#endif // Scale_H

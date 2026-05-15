@@ -18,7 +18,7 @@ public:
     const ProductRecord &getProduct() const { return product; }
     PricingType getPricingType() const { return product.pricingType; }
     double getAmount() const { return amount; }
-    void setWeight(Scale & scale)  {  }
+    void setWeight(Scale & scale);
     double getWeight() const { return weight; }
 
 private:

@@ -68,10 +68,6 @@ private:
     void applyCancel();
     void applyCommit(Ledger &ledger);
 };
-enum PaymentType
-{
-    Cash,
-    Card
-};
+
 
 #endif // Transaction_H
