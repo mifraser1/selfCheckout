@@ -37,6 +37,7 @@ LedgerEntry Ledger::createLedgerEntry(const Transaction &tx)
 
         // Store entry
         entries.push_back(entry);
+        return entry;
     };
 
     void Ledger::refund(LedgerEntry& entry){

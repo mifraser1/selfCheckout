@@ -7,3 +7,4 @@ double Scale::readWeight()
     // Method to read weight from the scale
     return weight;
 }
+

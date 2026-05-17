@@ -3,46 +3,48 @@
 #include <string>
 #include <ctime>
 
-class Override {
-    // Skeleton for override class, will be used for employee interventions
+// Potentially override strategy pattern
 
-public:
-    Override() {    
-        // Constructor implementation
-    }
+// class Override {
 
-    bool toleranceCheck() {
-        // Method to check if the number of overrides has exceeded the tolerance threshold
-    }
 
-    void setToleranceThreshold(int toleranceThreshold) {
-        // Method to set the tolerance threshold for overrides
-    }
+// public:
+//     Override() {    
+//         // Constructor implementation
+//     }
 
-    bool flagEmployeeOverride() {
-        // Method to flag an override for review based on employee ID
-    }
+//     bool toleranceCheck() {
+//         // Method to check if the number of overrides has exceeded the tolerance threshold
+//     }
 
-    void commitTimeStamp(time_t timestamp) {
-        // Method to commit the timestamp of the override
-    }
+//     void setToleranceThreshold(int toleranceThreshold) {
+//         // Method to set the tolerance threshold for overrides
+//     }
 
-    void logOverride(int employeeID, std::string reason, time_t timestamp) {
-        // Method to log the override details for auditing purposes
-    }
+//     bool flagEmployeeOverride() {
+//         // Method to flag an override for review based on employee ID
+//     }
 
-    void authorize() {
-        // Method to authorize the override 
-    }
+//     void commitTimeStamp(time_t timestamp) {
+//         // Method to commit the timestamp of the override
+//     }
 
-private:
-    int suspensionCount;
-    int toleranceThreshold;
-    bool employeeOverrideFlag;
-    int overrideID;
-    int employeeID;
-    time_t timestamp;
-    std::string reason;
+//     void logOverride(int employeeID, std::string reason, time_t timestamp) {
+//         // Method to log the override details for auditing purposes
+//     }
 
-};
+//     void authorize() {
+//         // Method to authorize the override 
+//     }
+
+// private:
+//     int suspensionCount;
+//     int toleranceThreshold;
+//     bool employeeOverrideFlag;
+//     int overrideID;
+//     int employeeID;
+//     time_t timestamp;
+//     std::string reason;
+
+// };
 #endif // OVERRIDE_H

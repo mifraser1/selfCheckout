@@ -7,10 +7,11 @@ enum class Result{
     Success,
     InvalidState,
     PaymentFailed,
+    OverrideRequired,
     Failure
 }; 
 
-// Rules and transitions
+// Rules and transitions between 
 // What's allowed and when to change state
 
 class TransactionState {

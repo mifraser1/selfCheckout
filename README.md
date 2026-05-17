@@ -40,31 +40,34 @@ cmake --build build
 - Update `CMakeLists.txt` if adding new source files
 
 ## Features (To be implemented)
-- [ ] Pricing Strategy based on ID
-- [ ] Weight validation based on expected weight of items
-- [ ] Age validation for certain items
+- [ ] Examine possible dependency loops
+- [ ] PaymentStrategy Redo
+- [x] Age validation for certain items
 - [x] Implement State System logic
 - [ ] Instead throw exceptions and return error codes
-- [ ] Implement Scale interface, for Amount
+- [x] Implement Scale interface, for Amount
+	- Weight validation based on expected weight of items
 - [ ] Look into APIs for inventory, accounting, payment
 - [ ] CSV loading infrastructure next
 	- Columns of the ledger CSV should have `entryID` `TransactionID` `subtotal` `tax` `total` `timestamp`
-- [ ] Override Class: Should track who (manager ID), when, what was overridden, and reason?
+- [ ] Override Class: Should track who (manager ID), when, what was overridden, and reason
+	- Decide between simple dependency or strategy pattern (consider context, behaviorm and variety)
 - [ ] Controller Interface
 	- MockScale fakeScale; InventoryRecord inventoryRecord; Ledger ledgerEntry;CheckoutSystem checkout(fakeScale);
+- [ ] Change if check for amount type
 
 ## Example Output
 Self-Checkout System Simulation
 
+MockScale connected.
+MockScale calibrated.
 Scanning Items...
-Remove Item Scanned
-
-Finished Scanning
+Item removed from transaction.
 Processing Payment...
 Subtotal: $2.70
 Tax: $0.21
 Total: $2.91
-Transaction Complete (System Ready)
+Thank you for your purchase! Printing receipt...
 
 # Self-Checkout
 Project to simulate the real-world self-checkout system

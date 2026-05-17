@@ -1,22 +1,21 @@
 #include "AwaitingPaymentState.h"
 #include "Transaction.h"
-#include "TransactionState.h"
 #include "PaymentProcessingState.h"
 
-Result AwaitingPaymentState::addItem(Transaction& Transaction, const ProductRecord& product, double amount, double weight) {
+Result AwaitingPaymentState::addItem(Transaction& transaction, const ProductRecord& product, double amount, double weight) {
     return Result::InvalidState;
 }
-Result AwaitingPaymentState::removeItem(Transaction& Transaction, int index) {
+Result AwaitingPaymentState::removeItem(Transaction& transaction, int index) {
     return Result::InvalidState;
 }
-Result AwaitingPaymentState::finishScanning(Transaction& Transaction) {
+Result AwaitingPaymentState::finishScanning(Transaction& transaction) {
     return Result::InvalidState;
 }
-Result AwaitingPaymentState::processPayment(Transaction& Transaction, Ledger& ledger) {
-    Transaction.setState(std::make_unique<PaymentProcessingState>());
+Result AwaitingPaymentState::processPayment(Transaction& transaction, Ledger& ledger) {
+    transaction.setState(std::make_unique<PaymentProcessingState>());
     return Result::Success;
 }
-Result AwaitingPaymentState::cancel(Transaction& Transaction) {
-    Transaction.applyCancel();
+Result AwaitingPaymentState::cancel(Transaction& transaction) {
+    transaction.applyCancel();
     return Result::Success;
 }

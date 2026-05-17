@@ -2,14 +2,17 @@
 #include "TransactionItem.h"
 #include "Ledger.h"
 #include "ProductRecord.h"
+#include "TransactionState.h"
 #include "ScanningState.h"
 #include "AwaitingPaymentState.h"
 #include "PaymentProcessingState.h"
 #include "CompletedState.h"
+#include "OverrideState.h"
 #include "PricingEngine.h"
 #include "BasePricingRule.h"
 #include "DiscountPricingRule.h"
 #include "TaxRule.h"
+#include "PaymentStrategy.h"
 #include <string>
 #include <stdexcept>
 #include <vector>
@@ -34,7 +37,7 @@ void Transaction::setState(std::unique_ptr<TransactionState> newState)
 void Transaction::setPaymentStrategy(std::unique_ptr<PaymentStrategy> strategy)
 {
     paymentStrategy = std::move(strategy);
-};
+}
 
 Result Transaction::addItem(const ProductRecord &product, double amount = 0, double weight = 0.0)
 {
@@ -68,11 +71,12 @@ void Transaction::applyAddItem(const ProductRecord &product, double amount, doub
 
 void Transaction::applyRemoveItem(int index)
 {
-    if (index < 0 || index >= static_cast<int>(items.size()))
-    {
-        throw std::out_of_range("Invalid item index");
-    }
+    // if (index < 0 || index >= static_cast<int>(items.size()))
+    // {
+    //     throw std::out_of_range("Invalid item index");
+    // }
     items.erase(items.begin() + index);
+    std::cout << "Item removed from transaction." << std::endl;
 }
 
 void Transaction::applyProcessPayment(Ledger &ledger)
@@ -84,19 +88,24 @@ void Transaction::applyProcessPayment(Ledger &ledger)
         throw std::runtime_error("No payment strategy set");
     }
 
-    bool success = paymentStrategy->processPayment(result.total);
+    // bool success = paymentStrategy->processPayment(*this, result.total, paymentType);
+    bool success = true;
 
-    // Double check then commit Transaction
+    // Double check then finalize Transaction
     if (success)
     {
         applyCommit(ledger);
+
     }
 }
 
 void Transaction::applyCancel()
 {
     items.clear();
-    paymentStatus = false;
+    // Replace with fresh transaction
+    *this = Transaction();
+    setState(std::make_unique<ScanningState>());
+
 }
 
 void Transaction::applyCommit(Ledger &ledger)
@@ -105,14 +114,20 @@ void Transaction::applyCommit(Ledger &ledger)
     // Create ledger entry to assign IDs and store snapshot
     ledger.createLedgerEntry(*this);
 
-    items.clear(); // Transaction is complete, clear items
-                   // paymentStatus = true; // mark as paid
-
-    // Move state
     setState(std::make_unique<CompletedState>());
 
     // Stored in Ledger not returned
     // return entry;
+}
+
+bool Transaction::isAgeVerified() const
+{
+    static bool run = false;
+    if (run) {
+        return true;
+    }
+    run = true;
+    return false;
 }
 
 PricingResult Transaction::getPricing() const

@@ -2,9 +2,16 @@
 #define MockScale_H
 #include "Scale.h"
 
-class MockScale : public Scale {
+// Hardware implementation of the Scale interface
+class MockScale : public Scale
+{
 public:
-    double readWeight() override {
+    MockScale() = default;
+    void connect() override;
+    void disconnect() override;
+    void calibrate() override;    double readWeight() override
+    {
+        // Hardcoded to simluate real world reading
         return 1.25;
     }
 };

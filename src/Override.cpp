@@ -32,12 +32,12 @@
 // void Override::authorize()
 // {
 //     // Method to authorize the override
-// }
+// // }
 
-int suspensionCount;
-int toleranceThreshold;
-bool employeeOverrideFlag;
-int overrideID;
-int employeeID;
-std::string timestamp;
-std::string reason;
+// int suspensionCount;
+// int toleranceThreshold;
+// bool employeeOverrideFlag;
+// int overrideID;
+// int employeeID;
+// std::string timestamp;
+// std::string reason;
