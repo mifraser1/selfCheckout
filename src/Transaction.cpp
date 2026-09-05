@@ -10,6 +10,7 @@
 #include "OverrideState.h"
 #include "PricingEngine.h"
 #include "BasePricingRule.h"
+#include "BGPricingRule.h"
 #include "DiscountPricingRule.h"
 #include "TaxRule.h"
 #include "PaymentStrategy.h"
@@ -25,6 +26,7 @@ Transaction::Transaction()
     state = std::make_unique<ScanningState>();
 
     pricingEngine.addPricingRule(std::make_unique<BasePricingRule>());
+    pricingEngine.addPricingRule(std::make_unique<BGPricingRule>());
     pricingEngine.addPricingRule(std::make_unique<DiscountPricingRule>());
     pricingEngine.addPricingRule(std::make_unique<TaxRule>());
 }
@@ -122,7 +124,9 @@ void Transaction::applyCommit(Ledger &ledger)
 
 bool Transaction::isAgeVerified() const
 {
+    // Placeholder
     static bool run = false;
+    
     if (run) {
         return true;
     }

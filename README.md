@@ -5,6 +5,7 @@ A C++ application implementing a self-checkout system.
 ## Requirements
 - CMake 3.10+
 - C++17 compatible compiler (g++, clang, or MSVC)
+- Asio development headers for asynchronous networking(libasio-dev)
 
 ## Build Instructions
 
@@ -28,10 +29,11 @@ cmake --build build
 ## Project Structure
 ```
 .
-├── src/              # Source files
-├── include/          # Header files
-├── CMakeLists.txt    # Build configuration
-└── README.md         # This file
+├── src/              	 # Source files
+├── include/         	 # Header files
+├── CMakeLists.txt 	 	 # Build configuration
+├── selfCheckoutFrontent # Frontend files
+└── README.md      	     # This file
 ```
 
 ## Development
@@ -55,6 +57,7 @@ cmake --build build
 - [ ] Controller Interface
 	- MockScale fakeScale; InventoryRecord inventoryRecord; Ledger ledgerEntry;CheckoutSystem checkout(fakeScale);
 - [ ] Change if check for amount type
+- [ ] Frontend skeleton: HTML page, CSS styling, and Js scripting
 
 ## Example Output
 Self-Checkout System Simulation

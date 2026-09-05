@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Self-Checkout Test</title>
+</head>
+
+<body>
+    <h1>Hello from HTML</h1>
+    <button onclick="getTotal()">Get Total</button>
+
+    <p id="subtotal">Click the subtotal button.</p>
+    <p id="tax"></p>
+    <p id="total"></p>
+
+    <script>
+        async function getTotal() {
+            const response = await fetch('/api/total');
+            const data = await response.json();
+            document.getElementById('subtotal').textContent = 'Subtotal: $' + data.subtotal.toFixed(2);
+            document.getElementById('tax').textContent = 'Tax: $' + data.tax.toFixed(2);
+            document.getElementById('total').textContent = 'Total: $' + data.total.toFixed(2);
+        }
+    </script>
+</body>
+
+</html>
