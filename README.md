@@ -46,11 +46,12 @@ cmake --build build
 - [ ] PaymentStrategy Redo
 - [x] Age validation for certain items
 - [x] Implement State System logic
-- [ ] Instead throw exceptions and return error codes
+ - All states, including: Awaiting Weight, Cancelled, Supended.
+- [ ] Instead throw exceptions/return error codes
 - [x] Implement Scale interface, for Amount
 	- Weight validation based on expected weight of items
-- [ ] Look into APIs for inventory, accounting, payment
-- [ ] CSV loading infrastructure next
+ - Max weights, calibration details: with a get
+- [ ] CSV loading infrastructure
 	- Columns of the ledger CSV should have `entryID` `TransactionID` `subtotal` `tax` `total` `timestamp`
 - [ ] Override Class: Should track who (manager ID), when, what was overridden, and reason
 	- Decide between simple dependency or strategy pattern (consider context, behaviorm and variety)
@@ -77,7 +78,7 @@ Project to simulate the real-world self-checkout system
 
 ## System Description:
 
-Self-Checkout System is a transactional retail system for customers to scan, weigh, and buy items while integrating with external inventory, accounting systems, and employee oversight. Inventory accuracy is improved by reserving items locally for an open Transaction and permanently altering inventory after payment. Waste is reduced by fraud detection with weight validation and employee intervention. The system balances security and throughput with usability by incorporating state-based control and human-in-the-loop escalation. 
+Self-Checkout System is a transactional retail system for customers to scan, weigh, and buy items while integrating with external inventory, accounting, and employee oversight. Inventory accuracy is improved by reserving items locally for an open Transaction and permanently altering inventory after payment. Waste is reduced by fraud detection with weight validation and employee intervention. The system balances security and throughput with usability by incorporating state-based control and human-in-the-loop escalation. 
 
 Self-Checkout functional requirements are touch screen UI, bar code scanner, receipt printer, and scale that are integrated with a store inventory system, accounting and payment processing, and employee oversight. The inventory system and accounting are external software for systems of record. The conditions for success are a smooth flow of a customer experience considering voided Transactions and anti-theft, the individual items are scanned and the Transaction accounted for.
 ## Architecture Overview
