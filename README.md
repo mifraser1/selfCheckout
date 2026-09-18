@@ -32,14 +32,9 @@ cmake --build build
 ├── src/              	 # Source files
 ├── include/         	 # Header files
 ├── CMakeLists.txt 	 	 # Build configuration
-├── selfCheckoutFrontent # Frontend files
+├── selfCheckoutFrontend # Frontend files
 └── README.md      	     # This file
 ```
-
-## Development
-- Add new source files in `src/`
-- Add headers in `include/`
-- Update `CMakeLists.txt` if adding new source files
 
 ## Features (To be implemented)
 - [ ] Examine possible dependency loops
@@ -81,6 +76,7 @@ Project to simulate the real-world self-checkout system
 Self-Checkout System is a transactional retail system for customers to scan, weigh, and buy items while integrating with external inventory, accounting, and employee oversight. Inventory accuracy is improved by reserving items locally for an open Transaction and permanently altering inventory after payment. Waste is reduced by fraud detection with weight validation and employee intervention. The system balances security and throughput with usability by incorporating state-based control and human-in-the-loop escalation. 
 
 Self-Checkout functional requirements are touch screen UI, bar code scanner, receipt printer, and scale that are integrated with a store inventory system, accounting and payment processing, and employee oversight. The inventory system and accounting are external software for systems of record. The conditions for success are a smooth flow of a customer experience considering voided Transactions and anti-theft, the individual items are scanned and the Transaction accounted for.
+
 ## Architecture Overview
 ```
 ┌─────────────────────────────────────────────────────────────┐

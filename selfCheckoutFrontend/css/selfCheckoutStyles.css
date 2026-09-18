@@ -1,0 +1,10 @@
+/* Read out of self-checkout totals and individaul items in interface */
+.total {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+.subtotal, .tax {
+    font-size: 1.5em;
+    text-align: left;
+}
