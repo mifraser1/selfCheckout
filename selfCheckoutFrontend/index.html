@@ -9,13 +9,27 @@
 
 <body>
     <h1>End Transaction Simulation</h1>
+
+    <button onclick="scanItem()">Scan Item</button>
+
     <button onclick="getTotal()">Get Total</button>
 
     <p id="subtotal">Click the subtotal button.</p>
     <p id="tax"></p>
     <p id="total"></p>
+    <p id="farewell">Thank you for your purchase! Printing receipt...</p>
 
     <script>
+        async function scanItem() {
+            const response = await fetch('/api/scan', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: productId })
+            });
+            const data = await response.json();
+            console.log('Item scanned:', data);
+        }
+
         async function getTotal() {
             const response = await fetch('/api/total');
             const data = await response.json();

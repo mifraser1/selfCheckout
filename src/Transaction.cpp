@@ -97,7 +97,6 @@ void Transaction::applyProcessPayment(Ledger &ledger)
     if (success)
     {
         applyCommit(ledger);
-
     }
 }
 
@@ -107,7 +106,6 @@ void Transaction::applyCancel()
     // Replace with fresh transaction
     *this = Transaction();
     setState(std::make_unique<ScanningState>());
-
 }
 
 void Transaction::applyCommit(Ledger &ledger)
@@ -126,8 +124,9 @@ bool Transaction::isAgeVerified() const
 {
     // Placeholder
     static bool run = false;
-    
-    if (run) {
+
+    if (run)
+    {
         return true;
     }
     run = true;

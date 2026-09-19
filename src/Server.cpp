@@ -19,16 +19,26 @@ static std::string readFile(const std::string &path)
     return buffer.str();
 }
 
-void runServer(Transaction &tx, Ledger &ledger, MockScale &scale)
+// need to pass catalog
+void runServer(Transaction &tx, Ledger &ledger, MockScale &scale )
 {
     crow::SimpleApp app;
 
-    CROW_ROUTE(app, "/")([]
-                         { return readFile(std::string(FRONTEND_DIR) + "/index.html"); });
+    CROW_ROUTE(app, "/")([]{ return readFile(std::string(FRONTEND_DIR) + "/index.html"); });
 
-    // When the HTML page calls /api/total, run the transaction math
-    CROW_ROUTE(app, "/api/total")([&tx]
-                                  {
+    //API to Scan
+    CROW_ROUTE(app, "/api/scan").methods("POST"_method)([&tx](const crow::request& req){
+        auto body = crow::json::load(req.body);
+        int productId = body["id"].i();
+
+        crow::json::wvalue result;
+        result["success"] = true;
+        result["total"] = tx.getTotal();
+        return result;
+    });
+
+    // Total Endpoint
+    CROW_ROUTE(app, "/api/total")([&tx]{
         crow::json::wvalue result;
         result["subtotal"] = tx.getSubtotal();
         result["tax"]      = tx.getTaxTotal();
