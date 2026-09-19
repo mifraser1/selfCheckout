@@ -37,23 +37,21 @@ cmake --build build
 ```
 
 ## Features (To be implemented)
-- [ ] Examine possible dependency loops
-- [ ] PaymentStrategy Redo
+- [ ] DBMS loading infrastructure
+- [ ] Controller Interface
+	- MockScale fakeScale; InventoryRecord inventoryRecord; Ledger ledgerEntry; CheckoutSystem checkout(fakeScale);
+	- HTML page, CSS styling, and Js scripting
 - [x] Age validation for certain items
 - [x] Implement State System logic
  - All states, including: Awaiting Weight, Cancelled, Supended.
 - [ ] Instead throw exceptions/return error codes
+- [ ] Examine possible dependency loops
+- [ ] PaymentStrategy Redo
 - [x] Implement Scale interface, for Amount
 	- Weight validation based on expected weight of items
  - Max weights, calibration details: with a get
-- [ ] CSV loading infrastructure
-	- Columns of the ledger CSV should have `entryID` `TransactionID` `subtotal` `tax` `total` `timestamp`
-- [ ] Override Class: Should track who (manager ID), when, what was overridden, and reason
+- [x] Override Class: Should track who (manager ID), when, what was overridden, and reason
 	- Decide between simple dependency or strategy pattern (consider context, behaviorm and variety)
-- [ ] Controller Interface
-	- MockScale fakeScale; InventoryRecord inventoryRecord; Ledger ledgerEntry;CheckoutSystem checkout(fakeScale);
-- [ ] Change if check for amount type
-- [ ] Frontend skeleton: HTML page, CSS styling, and Js scripting
 
 ## Example Output
 Self-Checkout System Simulation
