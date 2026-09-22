@@ -56,15 +56,21 @@ cmake --build build
 ## Example Output
 Self-Checkout System Simulation
 
-MockScale connected.
-MockScale calibrated.
-Scanning Items...
-Item removed from transaction.
-Processing Payment...
-Subtotal: $2.70
-Tax: $0.21
-Total: $2.91
-Thank you for your purchase! Printing receipt...
+
+PUBLIC
+
+0 Garden Street
+
+Store Manager: Kathryn
+
+Date: 09/22/2026
+Gum$4.50
+Apples$3.25
+--------------------------------
+TOTAL$7.75
+
+Thank you for your purchase!
+
 
 # Self-Checkout
 Project to simulate the real-world self-checkout system

@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Self-Checkout Test</title>
-    <link rel="stylesheet" href="/css/selfCheckoutStyles.css">
+    <link rel="stylesheet" href="css/selfCheckoutStyles.css">
 </head>
 
 <body>
-    <h1>End Transaction Simulation</h1>
+    <!-- <h1>End Transaction Simulation</h1>
 
     <button onclick="scanItem()">Scan Item</button>
 
@@ -17,8 +17,8 @@
     <p id="subtotal">Click the subtotal button.</p>
     <p id="tax"></p>
     <p id="total"></p>
-    <p id="farewell">Thank you for your purchase! Printing receipt...</p>
-
+    <p id="farewell">Thank you for your purchase! Printing receipt...</p> -->
+<!-- 
     <script>
         async function scanItem() {
             const response = await fetch('/api/scan', {
@@ -37,7 +37,26 @@
             document.getElementById('tax').textContent = 'Tax: $' + data.tax.toFixed(2);
             document.getElementById('total').textContent = 'Total: $' + data.total.toFixed(2);
         }
-    </script>
+    </script> -->
+
+    <div class="receipt">
+        <div class="receipt-header">
+            <h2>PUBLIC</h2>
+            <p>0 Garden Street</p>
+            <p>Store Manager: Kathryn</p>
+            <p>Date: 09/22/2026</p>
+        </div>
+        <div class="receipt-body">
+            <div class="item"><span>Gum</span><span>$4.50</span></div>
+            <div class="item"><span>Apples</span><span>$3.25</span></div>
+            <div class="divider">--------------------------------</div>
+            <div class="item total"><span>TOTAL</span><span>$7.75</span></div>
+        </div>
+        <div class="receipt-footer">
+            <p>Thank you for your purchase!</p>
+        </div>
+    </div>
+
 </body>
 
 </html>
