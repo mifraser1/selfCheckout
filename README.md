@@ -56,21 +56,7 @@ cmake --build build
 ## Example Output
 Self-Checkout System Simulation
 
-
-PUBLIC
-
-0 Garden Street
-
-Store Manager: Kathryn
-
-Date: 09/22/2026
-Gum$4.50
-Apples$3.25
---------------------------------
-TOTAL$7.75
-
-Thank you for your purchase!
-
+![Example Output](/selfCheckout/selfCheckoutFrontend/assets/Screenshot_2026-09-23_05-18-03.png)
 
 # Self-Checkout
 Project to simulate the real-world self-checkout system
