@@ -56,7 +56,7 @@ cmake --build build
 ## Example Output
 Self-Checkout System Simulation
 
-![Example Output](/selfCheckout/selfCheckoutFrontend/assets/Screenshot_2026-09-23_05-18-03.png)
+![Example Output](/selfCheckoutFrontend/assets/Screenshot_2026-09-23_05-18-03.png)
 
 # Self-Checkout
 Project to simulate the real-world self-checkout system
