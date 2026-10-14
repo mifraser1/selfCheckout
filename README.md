@@ -38,6 +38,7 @@ cmake --build build
 
 ## Features (To be implemented)
 - [ ] DBMS loading infrastructure
+	- Batch DBMS transfers for max uptime
 - [ ] Controller Interface
 	- MockScale fakeScale; InventoryRecord inventoryRecord; Ledger ledgerEntry; CheckoutSystem checkout(fakeScale);
 	- HTML page, CSS styling, and Js scripting
@@ -85,10 +86,10 @@ Self-Checkout functional requirements are touch screen UI, bar code scanner, rec
         │                     │                     │
         │          ┌──────────┴──────────┐          │
         │          ▼                     ▼          │
-        │      ┌─────────────┐    ┌────────────┐   │
-        │      │Transaction  │    │ Product    │   │
-        │      │Item         │    │ Record     │   │
-        │      └─────────────┘    └────────────┘   │
+        │      ┌─────────────┐    ┌────────────┐    │
+        │      │Transaction  │    │ Product    │    │
+        │      │Item         │    │ Record     │    │
+        │      └─────────────┘    └────────────┘    │
         │                                           │
         └───────────────────────┬───────────────────┘
                                 ▼
