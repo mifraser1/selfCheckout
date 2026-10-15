@@ -6,7 +6,7 @@
 
 class CashPayment : public PaymentStrategy {
 public:
-    bool processPayment(Transaction & transaction, double amount, PaymentType paymentType) override;
+    bool processPayment(Transaction & transaction, std::int64_t amountCents, PaymentType paymentType) override;
 };
 
 #endif // CashPayment_H

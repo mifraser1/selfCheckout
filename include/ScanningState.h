@@ -1,10 +1,11 @@
 #ifndef SCANNINGSTATE_H
 #define SCANNINGSTATE_H
+#include <cstdint>
 #include "TransactionState.h"
 
 class ScanningState : public TransactionState {
 public:
-    Result addItem(Transaction&, const ProductRecord&, double, double) override;
+    Result addItem(Transaction&, const ProductRecord&, std::int64_t, double) override;
     Result removeItem(Transaction& , int index) override;
     Result finishScanning(Transaction&) override;
     Result processPayment(Transaction&, Ledger&) override;

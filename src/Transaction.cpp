@@ -41,7 +41,7 @@ void Transaction::setPaymentStrategy(std::unique_ptr<PaymentStrategy> strategy)
     paymentStrategy = std::move(strategy);
 }
 
-Result Transaction::addItem(const ProductRecord &product, double amount = 0, double weight = 0.0)
+Result Transaction::addItem(const ProductRecord &product, std::int64_t amount, double weight)
 {
     return state->addItem(*this, product, amount, weight);
 }
@@ -66,7 +66,7 @@ Result Transaction::cancel()
     return state->cancel(*this);
 }
 
-void Transaction::applyAddItem(const ProductRecord &product, double amount, double weight)
+void Transaction::applyAddItem(const ProductRecord &product, std::int64_t amount, double weight)
 {
     items.push_back(std::make_unique<TransactionItem>(product, amount, weight));
 }
@@ -110,14 +110,17 @@ void Transaction::applyCancel()
 
 void Transaction::applyCommit(Ledger &ledger)
 {
-    // Commit the Transaction
     // Create ledger entry to assign IDs and store snapshot
     ledger.createLedgerEntry(*this);
 
-    setState(std::make_unique<CompletedState>());
+    // If Ledger entry ack not commited, then rollback Transaction
+    if (!ledger.createLedgerEntry(*this).entryID)
+    {
+        throw std::runtime_error("Ledger entry creation failed");
+        ledger.refund(ledger.createLedgerEntry(*this));
+    }
 
-    // Stored in Ledger not returned
-    // return entry;
+    setState(std::make_unique<CompletedState>());
 }
 
 bool Transaction::isAgeVerified() const

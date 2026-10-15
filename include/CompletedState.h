@@ -1,6 +1,7 @@
 #ifndef COMPLETEDSTATE_H
 #define COMPLETEDSTATE_H
 
+#include <cstdint>
 #include "TransactionState.h"
 #include "Ledger.h"
 
@@ -8,7 +9,7 @@ class Ledger;
 
 class CompletedState : public TransactionState {
 public:
-    Result addItem(Transaction& Transaction, const ProductRecord& product, double amount, double) override;
+    Result addItem(Transaction& Transaction, const ProductRecord& product, std::int64_t amount, double) override;
     Result removeItem(Transaction& Transaction, int index) override;
     Result finishScanning(Transaction& Transaction) override;
     Result processPayment(Transaction& Transaction, Ledger&) override;

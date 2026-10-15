@@ -1,5 +1,7 @@
 #ifndef TransactionSTATE_H
 #define TransactionSTATE_H
+#include <cstdint>
+
 class Transaction; // Forward declaration
 class ProductRecord; // Forward declaration
 class Ledger; // Forward declaration
@@ -16,8 +18,7 @@ enum class Result{
 
 class TransactionState {
 public:
-    virtual Result addItem(Transaction&, const
-    ProductRecord&, double, double) = 0;
+    virtual Result addItem(Transaction&, const ProductRecord&, std::int64_t, double) = 0;
     virtual Result removeItem(Transaction&, int index) = 0;
     virtual Result finishScanning(Transaction&) = 0;
     virtual Result processPayment(Transaction&, Ledger&) = 0;

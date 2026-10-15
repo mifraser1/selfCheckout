@@ -3,7 +3,7 @@
 #include "ScanningState.h"
 #include <iostream>
 
-Result OverrideState::addItem(Transaction & transaction, const ProductRecord &product, double amount, double  weight)
+Result OverrideState::addItem(Transaction & transaction, const ProductRecord &product, std::int64_t amount, double weight)
 {
     // Alert human in the loop
     std::cout << "Waiting for employee approval...\n";

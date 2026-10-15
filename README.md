@@ -104,6 +104,8 @@ Transaction manager: maintain item list, calc totals, manage state, handle rollb
 ## Data Model
 To be updated
 
+Item `amount` values are integer unit counts (`std::int64_t`); scale readings remain floating-point weights. Payment strategy amounts use `std::int64_t` cents.
+
 | Class            | Attributes                                                                                 | Methods                                                                                                                          |
 | ---------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
 | Transaction      | `TransactionID` `customerID` <br>`timestamp`<br>`paymentStatus`                            | `addItem()` `removeItem()` `calculateTotal()` `cancel()` `commit()`                                                              |

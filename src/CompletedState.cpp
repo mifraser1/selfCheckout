@@ -3,7 +3,7 @@
 #include "TransactionState.h"
 
 // Terminal state
-Result CompletedState::addItem(Transaction& transaction, const ProductRecord& product, double amount, double weight) {
+Result CompletedState::addItem(Transaction& transaction, const ProductRecord& product, std::int64_t amount, double weight) {
     return Result::InvalidState;
 }
 Result CompletedState::removeItem(Transaction& transaction, int index) {

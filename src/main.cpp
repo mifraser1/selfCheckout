@@ -35,10 +35,10 @@ int main()
 
      // Add items to Transaction
      cout << "Scanning Items..." << endl; // ScanningState
-     tx.addItem(getProductById(1), 2.0, 0.0);           // 2 units of gum
-     tx.addItem(getProductById(2), 0.0, 1.5);        // 1.5 lbs of apples
-     tx.addItem(getProductById(3), 2.0, 0.0);         // 2 units of prepackaged taxed item
-     tx.addItem(getProductById(4), 1.0, 0.0);          // 1 unit of age restricted item
+     tx.addItem(getProductById(1), 2, 0.0);           // 2 units of gum
+     tx.addItem(getProductById(2), 0, 1.5);        // 1.5 lbs of apples
+     tx.addItem(getProductById(3), 2, 0.0);         // 2 units of prepackaged taxed item
+     tx.addItem(getProductById(4), 1, 0.0);          // 1 unit of age restricted item
 
      // Simulate customer taking item off after scanning
      // tx.removeItem(2);

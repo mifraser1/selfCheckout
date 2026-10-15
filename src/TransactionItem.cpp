@@ -2,7 +2,7 @@
 #include "ProductRecord.h"
 #include "Scale.h"
 
-TransactionItem::TransactionItem(const ProductRecord &product, double amount, double weight)
+TransactionItem::TransactionItem(const ProductRecord &product, std::int64_t amount, double weight)
     : product(product), amount(amount), weight(weight) {}
 
 double TransactionItem::getBasePrice() const

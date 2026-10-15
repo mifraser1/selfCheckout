@@ -1,6 +1,7 @@
 #ifndef Transaction_H
 #define Transaction_H
 
+#include <cstdint>
 #include <vector>
 #include <memory>
 #include "ProductRecord.h"
@@ -35,7 +36,7 @@ public:
     void setPaymentType(PaymentType type) { paymentType = type; }
 
     // Public API for state transitions, delegates to current state
-    Result addItem(const ProductRecord &, double, double);
+    Result addItem(const ProductRecord &, std::int64_t, double);
     Result removeItem(int index);
     Result finishScanning();
     Result processPayment(Ledger &ledger);
@@ -63,7 +64,7 @@ private:
     bool paymentStatus = false; // Temp for payment processing
 
     // Internal methods for state actions
-    void applyAddItem(const ProductRecord &, double, double);
+    void applyAddItem(const ProductRecord &, std::int64_t, double);
     void applyRemoveItem(int index);
     void applyProcessPayment(Ledger &ledger);
     void applyCancel();

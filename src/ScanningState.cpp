@@ -5,7 +5,7 @@
 #include "OverrideState.h"
 #include <iostream>
 
-Result ScanningState::addItem(Transaction &transaction, const ProductRecord &product, double amount, double weight)
+Result ScanningState::addItem(Transaction &transaction, const ProductRecord &product, std::int64_t amount, double weight)
 {
     if (product.isAgeRestricted &&
         !transaction.isAgeVerified())

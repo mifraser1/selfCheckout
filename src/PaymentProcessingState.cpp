@@ -9,7 +9,7 @@
 #include <chrono>
 #include <iostream>
 
-Result PaymentProcessingState::addItem(Transaction &transaction, const ProductRecord &product, double amount, double weight)
+Result PaymentProcessingState::addItem(Transaction &transaction, const ProductRecord &product, std::int64_t amount, double weight)
 {
     return Result::InvalidState;
 }
